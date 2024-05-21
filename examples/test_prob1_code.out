@@ -1,0 +1,119 @@
+[
+    {
+        "opcode": "add",
+        "addr": 0,
+        "args": [
+            1,
+            4
+        ]
+    },
+    {
+        "opcode": "cmp",
+        "addr": 1,
+        "args": [
+            1,
+            0
+        ]
+    },
+    {
+        "opcode": "je",
+        "addr": 2,
+        "args": [
+            14
+        ]
+    },
+    {
+        "opcode": "rdiv",
+        "addr": 3,
+        "args": [
+            1,
+            5
+        ]
+    },
+    {
+        "opcode": "save",
+        "addr": 4,
+        "args": [
+            2
+        ]
+    },
+    {
+        "opcode": "cmp",
+        "addr": 5,
+        "args": [
+            2,
+            6
+        ]
+    },
+    {
+        "opcode": "je",
+        "addr": 6,
+        "args": [
+            12
+        ]
+    },
+    {
+        "opcode": "rdiv",
+        "addr": 7,
+        "args": [
+            1,
+            7
+        ]
+    },
+    {
+        "opcode": "save",
+        "addr": 8,
+        "args": [
+            2
+        ]
+    },
+    {
+        "opcode": "cmp",
+        "addr": 9,
+        "args": [
+            2,
+            8
+        ]
+    },
+    {
+        "opcode": "je",
+        "addr": 10,
+        "args": [
+            12
+        ]
+    },
+    {
+        "opcode": "jmp",
+        "addr": 11,
+        "args": [
+            0
+        ]
+    },
+    {
+        "opcode": "add",
+        "addr": 12,
+        "args": [
+            3,
+            1
+        ]
+    },
+    {
+        "opcode": "jmp",
+        "addr": 13,
+        "args": [
+            0
+        ]
+    },
+    {
+        "opcode": "out",
+        "addr": 14,
+        "args": [
+            3
+        ]
+    },
+    {
+        "opcode": "hlt",
+        "addr": 15,
+        "args": []
+    }
+]

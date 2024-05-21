@@ -1,0 +1,52 @@
+[
+    {
+        "opcode": "mov",
+        "addr": 0,
+        "args": [
+            63,
+            62
+        ]
+    },
+    {
+        "opcode": "add",
+        "addr": 1,
+        "args": [
+            64,
+            65
+        ]
+    },
+    {
+        "opcode": "out_rel",
+        "addr": 2,
+        "args": [
+            62
+        ]
+    },
+    {
+        "opcode": "cmp_rel_inc",
+        "addr": 3,
+        "args": [
+            62,
+            66
+        ]
+    },
+    {
+        "opcode": "je",
+        "addr": 4,
+        "args": [
+            6
+        ]
+    },
+    {
+        "opcode": "jmp",
+        "addr": 5,
+        "args": [
+            2
+        ]
+    },
+    {
+        "opcode": "hlt",
+        "addr": 6,
+        "args": []
+    }
+]
