@@ -21,6 +21,10 @@ class TestTranslator(unittest.TestCase):
         start("examples/cat.asm", "examples/cat_code.out",
               "examples/test_cat_code.out")
 
+    def test_hello_user(self):
+        start("examples/hello_user.asm", "examples/hello_user_code.out",
+              "examples/test_hello_user_code.out")
+
     def test_hello_world(self):
         start("examples/hello.asm", "examples/hello_code.out",
               "examples/test_hello_code.out")
