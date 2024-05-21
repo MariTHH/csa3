@@ -273,17 +273,21 @@ Data memory
 3. [prob1](examples/prob1.asm) -- программа, решающая первую задачу Эйлера.
 4. [sum](examples/sum.asm) -- программа, считающая сумму натуральных чисел от 1 до 100.
 
+
 Тесты для `translator`:
 1. [hello world](examples/hello.asm).
 2. [cat](examples/cat.asm) -- программа `cat`, повторяем ввод на выводе.
 3. [prob1](examples/prob1.asm) -- программа, решающая первую задачу Эйлера.
 4. [sum](examples/sum.asm) -- программа, считающая сумму натуральных чисел от 1 до 100.
 
+
 Реализация интеграционных тестов: [machine_integration_test](./machine_integration_test.py) и [translator_integration_test](./translator_integration_test.py)
+
 
 Реализация golden-тестов: [golden_test](./golden_test.py)
 
 Пример использования и журнал работы процессора на примере `cat`:
+
 ``` console
 mariia@Mariia:/mnt/d/csa-lab3$ cat examples/cat.asm
 .data:
