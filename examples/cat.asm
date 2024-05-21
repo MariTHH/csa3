@@ -1,8 +1,8 @@
 .data:
-    num tmp: 0
+    num tmp:
 
 .text:
-
+      in tmp
 loop: in tmp
     out_char tmp
 	jmp loop

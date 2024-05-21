@@ -268,7 +268,7 @@ def main(args):
             input_text = file.read()
             input_token = []
             for char in input_text.split(', '):
-                if char != input_text.split(', ')[0]:
+                if char != input_text.split(', '):
 
                     input_token.append(char.strip("'"))
     else:
