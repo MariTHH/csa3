@@ -12,6 +12,16 @@ files = [
 ]
 
 [[package]]
+name = "golden"
+version = "0.1.1"
+description = "Python library to extract data from tech companies and topics."
+optional = false
+python-versions = "*"
+files = [
+    {file = "golden-0.1.1.tar.gz", hash = "sha256:7156d83b80ca89b70de4045438215f6ed70031992fffd258330c831fe9f8b303"},
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
@@ -32,6 +42,21 @@ files = [
     {file = "packaging-24.0-py3-none-any.whl", hash = "sha256:2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5"},
     {file = "packaging-24.0.tar.gz", hash = "sha256:eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"},
 ]
+
+[[package]]
+name = "path"
+version = "16.14.0"
+description = "A module wrapper for os.path"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "path-16.14.0-py3-none-any.whl", hash = "sha256:8ee37703cbdc7cc83835ed4ecc6b638226fb2b43b7b45f26b620589981a109a5"},
+    {file = "path-16.14.0.tar.gz", hash = "sha256:dbaaa7efd4602fd6ba8d82890dc7823d69e5de740a6e842d9919b0faaf2b6a8e"},
+]
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+testing = ["appdirs", "more-itertools", "packaging", "pygments", "pytest (>=6,!=8.1.1)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy", "pytest-ruff (>=0.2.1)", "pywin32"]
 
 [[package]]
 name = "pluggy"
@@ -68,7 +93,17 @@ pluggy = ">=1.5,<2.0"
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
+[[package]]
+name = "to"
+version = "0.3"
+description = "A trainer for PyTorch"
+optional = false
+python-versions = "*"
+files = [
+    {file = "to-0.3.tar.gz", hash = "sha256:b51c951a04f0f7fa45cd99a871e0897e6a461e510b21860f145b95465544e51b"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "92b41c605f33ae7b682534b50ed9c2e7a532564815196bc96abec24d43e7f9f3"
+content-hash = "f3c247b057889642a6a5a8d148f94a0ddaadbd60bab599ffe5e7d87ba1f6ee3b"
