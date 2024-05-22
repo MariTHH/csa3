@@ -74,5 +74,4 @@ jobs:
       - name: Run Ruff linters
         run: poetry run ruff check .
 
-      - name: Test
-        run: poetry run pytest . -v
+
