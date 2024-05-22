@@ -38,6 +38,7 @@ jobs:
           pip install poetry
           poetry install
           pip install coverage
+          pip install pytest 
 
       - name: Run tests and collect coverage
         run: |
