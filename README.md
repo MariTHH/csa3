@@ -257,14 +257,14 @@ Data memory
 
 ## Апробация
 
-Тесты для `machine`:
+Тесты для `machine`
 
 1. [hello world](examples/hello.asm).
 2. [cat](examples/cat.asm) - программа `cat`, повторяем ввод на выводе.
 3. [prob1](examples/prob1.asm) - программа, решающая первую задачу Эйлера.
 4. [hello_user](examples/hello_user.asm) - программа, запрашивает у пользователя его имя, считывает его, выводит на экран приветствие (< -- ввод пользователя через файл ввода, > вывод симулятора)
 
-Тесты для `translator`:
+Тесты для `translator`
 1. [hello world](examples/hello.asm).
 2. [cat](examples/cat.asm) - программа `cat`, повторяем ввод на выводе.
 3. [prob1](examples/prob1.asm) - программа, решающая первую задачу Эйлера.
