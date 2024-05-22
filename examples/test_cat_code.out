@@ -7,17 +7,29 @@
         ]
     },
     {
-        "opcode": "out_char",
+        "opcode": "in",
         "addr": 1,
         "args": [
             0
         ]
     },
     {
-        "opcode": "jmp",
+        "opcode": "out_char",
         "addr": 2,
         "args": [
             0
         ]
+    },
+    {
+        "opcode": "jmp",
+        "addr": 3,
+        "args": [
+            1
+        ]
+    },
+    {
+        "opcode": "hlt",
+        "addr": 4,
+        "args": []
     }
 ]

@@ -8,22 +8,6 @@
         ]
     },
     {
-        "opcode": "mov",
-        "addr": 0,
-        "args": [
-            16,
-            15
-        ]
-    },
-    {
-        "opcode": "add",
-        "addr": 1,
-        "args": [
-            15,
-            17
-        ]
-    },
-    {
         "opcode": "add",
         "addr": 1,
         "args": [
@@ -47,14 +31,6 @@
         ]
     },
     {
-        "opcode": "cmp_rel_inc",
-        "addr": 3,
-        "args": [
-            15,
-            18
-        ]
-    },
-    {
         "opcode": "je",
         "addr": 4,
         "args": [
@@ -67,5 +43,10 @@
         "args": [
             2
         ]
+    },
+    {
+        "opcode": "hlt",
+        "addr": 6,
+        "args": []
     }
 ]
