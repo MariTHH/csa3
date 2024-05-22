@@ -1,147 +1,119 @@
 [
     {
-        "opcode": "mov",
+        "opcode": "add",
         "addr": 0,
         "args": [
-            32,
-            31
+            1,
+            4
         ]
     },
     {
-        "opcode": "add",
+        "opcode": "cmp",
         "addr": 1,
         "args": [
-            31,
-            33
-        ]
-    },
-    {
-        "opcode": "out_rel",
-        "addr": 2,
-        "args": [
-            31
-        ]
-    },
-    {
-        "opcode": "cmp_rel_inc",
-        "addr": 3,
-        "args": [
-            31,
-            34
+            1,
+            0
         ]
     },
     {
         "opcode": "je",
-        "addr": 4,
+        "addr": 2,
         "args": [
-            6
+            14
         ]
     },
     {
-        "opcode": "jmp",
-        "addr": 5,
+        "opcode": "rdiv",
+        "addr": 3,
+        "args": [
+            1,
+            5
+        ]
+    },
+    {
+        "opcode": "save",
+        "addr": 4,
         "args": [
             2
         ]
     },
     {
-        "opcode": "mov",
-        "addr": 6,
+        "opcode": "cmp",
+        "addr": 5,
         "args": [
-            35,
-            31
-        ]
-    },
-    {
-        "opcode": "out_rel",
-        "addr": 7,
-        "args": [
-            31
-        ]
-    },
-    {
-        "opcode": "cmp_rel_inc",
-        "addr": 8,
-        "args": [
-            31,
-            36
+            2,
+            6
         ]
     },
     {
         "opcode": "je",
-        "addr": 9,
+        "addr": 6,
         "args": [
-            11
+            12
         ]
     },
     {
-        "opcode": "jmp",
-        "addr": 10,
+        "opcode": "rdiv",
+        "addr": 7,
         "args": [
+            1,
             7
         ]
     },
     {
-        "opcode": "in",
-        "addr": 11,
-        "args": [
-            29
-        ]
-    },
-    {
         "opcode": "save",
-        "addr": 12,
+        "addr": 8,
         "args": [
-            30
-        ]
-    },
-    {
-        "opcode": "in",
-        "addr": 13,
-        "args": [
-            29
-        ]
-    },
-    {
-        "opcode": "out_char",
-        "addr": 14,
-        "args": [
-            29
-        ]
-    },
-    {
-        "opcode": "add",
-        "addr": 15,
-        "args": [
-            30,
-            37
+            2
         ]
     },
     {
         "opcode": "cmp",
-        "addr": 16,
+        "addr": 9,
         "args": [
-            38,
-            30
+            2,
+            8
         ]
     },
     {
         "opcode": "je",
-        "addr": 17,
+        "addr": 10,
         "args": [
-            19
+            12
         ]
     },
     {
         "opcode": "jmp",
-        "addr": 18,
+        "addr": 11,
         "args": [
-            13
+            0
+        ]
+    },
+    {
+        "opcode": "add",
+        "addr": 12,
+        "args": [
+            3,
+            1
+        ]
+    },
+    {
+        "opcode": "jmp",
+        "addr": 13,
+        "args": [
+            0
+        ]
+    },
+    {
+        "opcode": "out",
+        "addr": 14,
+        "args": [
+            3
         ]
     },
     {
         "opcode": "hlt",
-        "addr": 19,
+        "addr": 15,
         "args": []
     }
 ]
