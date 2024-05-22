@@ -6,18 +6,21 @@ from isa import Opcode, read_code, inst_to_mc
 
 class AluLeftMuxSignals(Enum):
     """Сигналы для левого входа АЛУ."""
+
     MEM = 1
     BR = 2
 
 
 class AluRightMuxSignals(Enum):
     """Сигналы для правого входа АЛУ."""
+
     ACC = 1
     ZERO = 2
 
 
 class AccMuxSignals(Enum):
     """Сигналы для выбора значения, попадающего в аккумулятор."""
+
     ALU = 1
     MEM = 2
     INPUT = 3
@@ -56,17 +59,20 @@ class DataPath:
                 raise EOFError()
             symbol = self.input_buffer.pop(0)
             symbol_code = ord(symbol)
-            assert 0 <= symbol_code <= 127, \
-                "input character is out of bound: {}".format(symbol_code)
+            assert (
+                0 <= symbol_code <= 127
+            ), "input character is out of bound: {}".format(symbol_code)
             self.acc = ord(symbol)
 
     def latch_br(self):
         self.br = self.alu
 
     def alu_sel_op(self, operation, sel_left, sel_right):
-        left_value = self.data_memory[self.data_address] \
-            if sel_left == AluLeftMuxSignals.MEM \
+        left_value = (
+            self.data_memory[self.data_address]
+            if sel_left == AluLeftMuxSignals.MEM
             else self.br
+        )
         right_value = self.acc if sel_right == AluRightMuxSignals.ACC else 0
 
         if operation == Opcode.CMP:
@@ -90,9 +96,10 @@ class DataPath:
             symbol = chr(symbol)
         else:
             symbol = str(symbol)
-        if not is_char or symbol != '\0':
-            logging.debug('output: %s << %s', repr(
-                ''.join(self.output_buffer)), repr(symbol))
+        if not is_char or symbol != "\0":
+            logging.debug(
+                "output: %s << %s", repr("".join(self.output_buffer)), repr(symbol)
+            )
             self.output_buffer.append(symbol)
 
     def write(self, value):
@@ -126,10 +133,9 @@ class ControlUnit:
         opcode = instr["opcode"]
         self.args = instr["args"]
         for mc in inst_to_mc[opcode]:
-
             self.mc_memory[mc](self)
             self.tick()
-            logging.debug('%s', self)
+            logging.debug("%s", self)
 
     def read_first_arg(self):
         if self.args:
@@ -161,37 +167,51 @@ class ControlUnit:
 
     def alu_cmp(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.CMP, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.CMP, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def alu_rdiv(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.RDIV, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.RDIV, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def alu_add(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.ADD, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.ADD, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def alu_sub(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.SUB, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.SUB, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def alu_mul(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.MUL, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.MUL, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def alu_div(self):
         self.data_path.latch_data_addr(self.args[1])
-        self.data_path.alu_sel_op(Opcode.DIV, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC)
+        self.data_path.alu_sel_op(
+            Opcode.DIV, AluLeftMuxSignals.MEM, AluRightMuxSignals.ACC
+        )
         self.data_path.latch_acc(AccMuxSignals.ALU)
 
     def inc_addr(self):
         self.data_path.latch_data_addr(self.args[0])
-        self.data_path.alu_sel_op(Opcode.INC, AluLeftMuxSignals.MEM, AluRightMuxSignals.ZERO)
+        self.data_path.alu_sel_op(
+            Opcode.INC, AluLeftMuxSignals.MEM, AluRightMuxSignals.ZERO
+        )
         self.data_path.latch_br()
 
     def out_num(self):
@@ -215,10 +235,27 @@ class ControlUnit:
         else:
             self.program_counter += 1
 
-    mc_memory = [read_first_arg, write_from_input, read_from_acc_addr, write_acc_by_second_arg,
-                 write_acc_by_first_arg, write_br, alu_cmp, alu_rdiv,
-                 alu_add, alu_sub, alu_mul, alu_div, inc_addr, out_num, out_char,
-                 next_instr, jump_instr, stop_program, jmp_zero]
+    mc_memory = [
+        read_first_arg,
+        write_from_input,
+        read_from_acc_addr,
+        write_acc_by_second_arg,
+        write_acc_by_first_arg,
+        write_br,
+        alu_cmp,
+        alu_rdiv,
+        alu_add,
+        alu_sub,
+        alu_mul,
+        alu_div,
+        inc_addr,
+        out_num,
+        out_char,
+        next_instr,
+        jump_instr,
+        stop_program,
+        jmp_zero,
+    ]
 
     def __repr__(self):
         state = "{{TICK: {}, ADDR: {}, PC: {}, OUT: {}, ACC: {}}}".format(
@@ -237,7 +274,7 @@ def simulation(code, input_tokens, data_memory_size, limit, data_section):
     control_unit = ControlUnit(data_path, code)
     instr_counter = 0
 
-    logging.debug('%s', control_unit)
+    logging.debug("%s", control_unit)
 
     try:
         while True:
@@ -245,45 +282,49 @@ def simulation(code, input_tokens, data_memory_size, limit, data_section):
             control_unit.decode_and_execute_instruction()
             instr_counter += 1
     except EOFError:
-        logging.warning('Input buffer is empty!')
+        logging.warning("Input buffer is empty!")
     except StopIteration:
         pass
-    logging.info('output_buffer: %s', repr(''.join(data_path.output_buffer)))
-    return ''.join(data_path.output_buffer), instr_counter, control_unit.current_tick()
+    logging.info("output_buffer: %s", repr("".join(data_path.output_buffer)))
+    return "".join(data_path.output_buffer), instr_counter, control_unit.current_tick()
 
 
 def main(args):
-    assert 1 <= len(args) <= 2, "Wrong arguments: machine.py <code_file> [ <input_file> ]"
+    assert (
+        1 <= len(args) <= 2
+    ), "Wrong arguments: machine.py <code_file> [ <input_file> ]"
 
     if len(args) == 2:
         code_file, input_file = args
     else:
         code_file = args[0]
-        input_file = ''
+        input_file = ""
 
     code, data_section = read_code(code_file)
 
-    if input_file != '':
+    if input_file != "":
         with open(input_file, encoding="utf-8") as file:
             input_text = file.read()
             input_token = []
-            for char in input_text.split(', '):
-                if char != input_text.split(', '):
-
+            for char in input_text.split(", "):
+                if char != input_text.split(", "):
                     input_token.append(char.strip("'"))
     else:
         input_token = []
 
-    output, instr_counter, ticks = simulation(code,
-                                              input_tokens=input_token,
-                                              data_memory_size=100000, limit=1000000000,
-                                              data_section=data_section)
+    output, instr_counter, ticks = simulation(
+        code,
+        input_tokens=input_token,
+        data_memory_size=100000,
+        limit=1000000000,
+        data_section=data_section,
+    )
 
-    print(''.join(output))
+    print("".join(output))
     print("instr_counter:", instr_counter, "ticks:", ticks)
-    return ''.join(output)
+    return "".join(output)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
     main(sys.argv[1:])

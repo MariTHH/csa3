@@ -12,20 +12,26 @@ def start(input_file, output_file, correct_file):
 
 
 class TestTranslator(unittest.TestCase):
-
     def test_prob1(self):
-        start("examples/prob1.asm", "examples/prob1_code.out",
-              "examples/test_prob1_code.out")
+        start(
+            "examples/prob1.asm",
+            "examples/prob1_code.out",
+            "examples/test_prob1_code.out",
+        )
 
     def test_cat(self):
-        start("examples/cat.asm", "examples/cat_code.out",
-              "examples/test_cat_code.out")
+        start("examples/cat.asm", "examples/cat_code.out", "examples/test_cat_code.out")
 
     def test_hello_user(self):
-        start("examples/hello_user.asm", "examples/hello_user_code.out",
-              "examples/test_hello_user_code.out")
+        start(
+            "examples/hello_user.asm",
+            "examples/hello_user_code.out",
+            "examples/test_hello_user_code.out",
+        )
 
     def test_hello_world(self):
-        start("examples/hello.asm", "examples/hello_code.out",
-              "examples/test_hello_code.out")
-
+        start(
+            "examples/hello.asm",
+            "examples/hello_code.out",
+            "examples/test_hello_code.out",
+        )

@@ -2,23 +2,25 @@ import sys
 from isa import Opcode, write_code
 
 command2opcode = {
-    'in': Opcode.IN,
-    'out': Opcode.OUT,
-    'out#': Opcode.OUT_REL,
-    'out_char': Opcode.OUT_CHAR,
-    'jmp': Opcode.JMP,
-    'hlt': Opcode.HLT,
-    'mov': Opcode.MOV,
-    'cmp': Opcode.CMP,
-    'cmp*': Opcode.CMP_REL_INC,
-    'je': Opcode.JE,
-    'rdiv': Opcode.RDIV,
-    'add': Opcode.ADD,
-    'sub': Opcode.SUB,
-    'mul': Opcode.MUL,
-    'div': Opcode.DIV,
-    'save': Opcode.SAVE
+    "in": Opcode.IN,
+    "out": Opcode.OUT,
+    "out#": Opcode.OUT_REL,
+    "out_char": Opcode.OUT_CHAR,
+    "jmp": Opcode.JMP,
+    "hlt": Opcode.HLT,
+    "mov": Opcode.MOV,
+    "cmp": Opcode.CMP,
+    "cmp*": Opcode.CMP_REL_INC,
+    "je": Opcode.JE,
+    "rdiv": Opcode.RDIV,
+    "add": Opcode.ADD,
+    "sub": Opcode.SUB,
+    "mul": Opcode.MUL,
+    "div": Opcode.DIV,
+    "save": Opcode.SAVE,
 }
+
+
 def translate(text):
     code = []
     labels = {}
@@ -31,7 +33,7 @@ def translate(text):
 
     for line in text.split("\n"):
         line = line.strip()
-        if line == '' or line.startswith(';'):
+        if line == "" or line.startswith(";"):
             continue
 
         # Reset the address counter once the .text section is reached
@@ -39,7 +41,7 @@ def translate(text):
             addr_counter = -1
             text_presented = True
 
-        if line.startswith('.'):
+        if line.startswith("."):
             continue
 
         addr_counter += 1
@@ -48,8 +50,10 @@ def translate(text):
         for word in line_words:
             word = word.strip()
 
-            if word[0] != '.' and word[-1] == ':':
-                assert word[:-1] not in labels, "Label " + word[:-1] + " is already presented!"
+            if word[0] != "." and word[-1] == ":":
+                assert word[:-1] not in labels, (
+                    "Label " + word[:-1] + " is already presented!"
+                )
                 labels[word[:-1]] = addr_counter
 
     assert text_presented, "Section .text is not presented!"
@@ -58,7 +62,7 @@ def translate(text):
 
     for line in text.split("\n"):
         line = line.strip()
-        if line == "" or line.startswith(';'):
+        if line == "" or line.startswith(";"):
             continue
 
         if line == ".data:":
@@ -85,22 +89,23 @@ def translate(text):
                 if len(variable) == 3:
                     variable[2] = variable[2][1:-1]
                     strlen = -1
-                    for char in variable[2].split(', '):
+                    for char in variable[2].split(", "):
                         if char:
-                        # char = char.replace("'", "")  # Remove single quotes from the character
+                            # char = char.replace("'", "")  # Remove single quotes from the character
                             strlen += 1
                             addr_counter += 1
                             if strlen == 0:
                                 variables[variable[1]] = addr_counter
-                            data.append(ord(char.strip("'")))  # Append ASCII value of the character to data
+                            data.append(
+                                ord(char.strip("'"))
+                            )  # Append ASCII value of the character to data
                     addr_counter += 1
-                    data.append(ord('\u0000'))
+                    data.append(ord("\u0000"))
             else:
                 addr_counter += 1
                 variables[variable[1]] = addr_counter
                 if len(variable) == 3:
                     data.append(int(variable[2]))
-
 
         elif section_text_in_progress:
             args = []
@@ -111,7 +116,7 @@ def translate(text):
                 command_start_index = 1
 
             for i in range(command_start_index + 1, len(command)):
-                if command[i][0] == '[' and command[i][-1] == ']':
+                if command[i][0] == "[" and command[i][-1] == "]":
                     if command[i][1:-1] in variables:
                         data.append(variables[command[i][1:-1]])
                         args.append(len(data) - 1)
@@ -128,16 +133,19 @@ def translate(text):
                         except ValueError:
                             pass
 
-            code.append({"opcode": command2opcode[command[command_start_index]],
-                         "addr": addr_counter,
-                         "args": args})
+            code.append(
+                {
+                    "opcode": command2opcode[command[command_start_index]],
+                    "addr": addr_counter,
+                    "args": args,
+                }
+            )
 
     return code, data
 
 
 def main(args):
-    assert len(args) == 2, \
-        "Wrong arguments: translator.py <input_file> <target_file>"
+    assert len(args) == 2, "Wrong arguments: translator.py <input_file> <target_file>"
     source, target = args
 
     with open(source, "rt", encoding="utf-8") as f:
@@ -147,5 +155,6 @@ def main(args):
     print("source LoC:", len(source.split()), "code instr:", len(code))
     write_code(target, code, data)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main(sys.argv[1:])

@@ -1,4 +1,3 @@
-
 import unittest
 
 import machine
@@ -13,23 +12,26 @@ def start(source_code, output_file, input_file):
 
 
 class TestMachine(unittest.TestCase):
-
     def test_hello(self):
         output = start("examples/hello.asm", "examples/hello_code.out", "")
         assert output == "Hello world!"
 
     def test_cat(self):
-        output = start("examples/cat.asm", "examples/cat_code.out", "examples/input.txt")
+        output = start(
+            "examples/cat.asm", "examples/cat_code.out", "examples/input.txt"
+        )
         assert output == "Good day!"
 
     def test_hello_user(self):
-        output = start("examples/hello_user.asm", "examples/hello_user_code.out", "examples/name.txt")
+        output = start(
+            "examples/hello_user.asm",
+            "examples/hello_user_code.out",
+            "examples/name.txt",
+        )
         print(output)
-        assert output == 'What is your name? Hello, maria'
-
+        assert output == "What is your name? Hello, maria"
 
     def test_prob1(self):
         output = start("examples/prob1.asm", "examples/prob1_code.out", "")
         print(output)
-        assert output == '233168'
-
+        assert output == "233168"
