@@ -1,35 +1,52 @@
 [
     {
-        "opcode": "in",
+        "opcode": "mov",
         "addr": 0,
         "args": [
-            0
+            16,
+            15
         ]
     },
     {
-        "opcode": "in",
+        "opcode": "add",
         "addr": 1,
         "args": [
-            0
+            15,
+            17
         ]
     },
     {
-        "opcode": "out_char",
+        "opcode": "out_rel",
         "addr": 2,
         "args": [
-            0
+            15
+        ]
+    },
+    {
+        "opcode": "cmp_rel_inc",
+        "addr": 3,
+        "args": [
+            15,
+            18
+        ]
+    },
+    {
+        "opcode": "je",
+        "addr": 4,
+        "args": [
+            6
         ]
     },
     {
         "opcode": "jmp",
-        "addr": 3,
+        "addr": 5,
         "args": [
-            1
+            2
         ]
     },
     {
         "opcode": "hlt",
-        "addr": 4,
+        "addr": 6,
         "args": []
     }
 ]
