@@ -5,7 +5,7 @@ source: |-
     num name: 0
     num nameCounter: 0
     num cur_ind: 0
-  
+
   .text:
     mov [prompt] cur_ind
     add cur_ind 1
@@ -26,7 +26,7 @@ source: |-
     cmp 0 nameCounter
     je end
     jmp naming
-  
+
   end:    hlt
 
 

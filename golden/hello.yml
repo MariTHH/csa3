@@ -3,7 +3,7 @@ source: |-
       num str_len: 12
       str hw: 12, 'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'
       num cur_ind: 0
-  
+
   .text:
       mov [hw] cur_ind
       add cur_ind 1
@@ -14,7 +14,7 @@ source: |-
   end:  hlt
 
 
-input: |-
+input: |
 
 code: |-
   [

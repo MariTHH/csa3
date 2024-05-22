@@ -320,6 +320,7 @@ def main(args):
         data_section=data_section,
     )
 
+
     print("".join(output))
     print("instr_counter:", instr_counter, "ticks:", ticks)
     return "".join(output)
