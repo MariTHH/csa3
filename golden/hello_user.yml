@@ -636,5 +636,5 @@ log: |
   DEBUG    root:machine.py:138 {TICK: 416, ADDR: 30, PC: 17, OUT: 48, ACC: 48} 
   DEBUG    root:machine.py:138 {TICK: 417, ADDR: 30, PC: 18, OUT: 48, ACC: 48} 
   DEBUG    root:machine.py:138 {TICK: 418, ADDR: 30, PC: 13, OUT: 48, ACC: 48} 
-  WARNING  root:machine.py:285 Input buffer is empty!
-  INFO     root:machine.py:288 output_buffer: 'What is your name? Hello, maria'
+  WARNING  root:machine.py:287 Input buffer is empty!
+  INFO     root:machine.py:291 output_buffer: 'What is your name? Hello, maria'
