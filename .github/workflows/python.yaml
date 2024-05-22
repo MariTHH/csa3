@@ -37,6 +37,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
+          pip install coverage
 
       - name: Run tests and collect coverage
         run: |
@@ -63,7 +64,7 @@ jobs:
           pip install poetry
           poetry install
           pip install ruff
-          pip install coverage
+          
 
       - name: Check code formatting with Ruff
         run: poetry run ruff format --check .
