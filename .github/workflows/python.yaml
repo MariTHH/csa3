@@ -61,9 +61,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
+          pip install ruff
+
 
       - name: Check code formatting with Ruff
-        run: ruff format .
+        run: poetry run ruff format --check .
 
       - name: Run Ruff linters
-        run: ruff check .
+        run: poetry run ruff check .
