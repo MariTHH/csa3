@@ -64,7 +64,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
-          pip install ruff
+          poetry add ruff
           
           
 
@@ -73,3 +73,6 @@ jobs:
 
       - name: Run Ruff linters
         run: poetry run ruff check .
+
+      - name: Test
+        run: poetry run pytest . -v
