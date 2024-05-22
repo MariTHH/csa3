@@ -281,10 +281,13 @@ def simulation(code, input_tokens, data_memory_size, limit, data_section):
             assert limit > instr_counter, "too long execution, increase limit!"
             control_unit.decode_and_execute_instruction()
             instr_counter += 1
+            if instr_counter > 100:
+                logging.getLogger().setLevel(logging.INFO)
     except EOFError:
         logging.warning("Input buffer is empty!")
     except StopIteration:
         pass
+
     logging.info("output_buffer: %s", repr("".join(data_path.output_buffer)))
     return "".join(data_path.output_buffer), instr_counter, control_unit.current_tick()
 
