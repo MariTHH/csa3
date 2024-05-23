@@ -5,12 +5,12 @@
 Группа: P3230
 
 Вариант
-Без усложнения  ```asm | cisc | harv | hw | tick | struct | stream | port | pstr | prob1```
+Без усложнения  ```asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1```
 
 * ЯП, Синтаксис: asm; Необходима поддержка label-ов
 * Архитектура: cisc; Система команд должна содержать сложные инструкции переменной длины и разрешающие адресацию как регистров, так и памяти
 * Организация памяти: harv - Гарвардская архитектура
-* Control Unit: hw - hardwired; Реализуется как часть модели
+* Control Unit: mc;
 * Точность модели: tick; Процессор необходимо моделировать с точности до такта
 * Представление машинного кода: struct; В виде высокоуровневой структуры данных; Считается, что одна инструкция укладывается в одно машинное слово, за исключением CISC архитектур; ПРИМЕЧАНИЕ. Транслятор переводит исходный код в класс Program, который затем сериализуется в бинарный вид. Компьютер использует десериализованный класс Program.
 * Ввод-вывод: stream; Осуществляется как поток токенов.; Ввод - считали значение, упортребили токен.
@@ -136,9 +136,9 @@ Data memory
 
 ## Кодирование инструкций
 
-Сериализация машинного кода в JSON.
-Один элемент списка, одна инструкция.
-Индекс списка - адрес инструкции(для команд перехода).
+* Сериализация машинного кода в JSON.
+* Один элемент списка, одна инструкция.
+* Индекс списка - адрес инструкции(для команд перехода).
 
 Пример:
 
@@ -197,7 +197,9 @@ Data memory
 
 Этапы трансляции (функция `translate`)
 
-1. Трансформирование текста в последовательность значимых машинных слов. Переменные: На этапе трансляции создается файл с данными `data_file.txt`, в который записываются значения всех переменных. Команды оперируют адресами на них. Задаётся либо числовым значением, либо указателем на начало строки (используя string)
+1. Трансформирование текста в последовательность значимых машинных слов. 
+    * Переменные: На этапе трансляции создается файл с данными `data_file.txt`, в который записываются значения всех переменных. Команды оперируют адресами на них. 
+    * Задаётся либо числовым значением, либо указателем на начало строки (используя string)
 2. Проверка корректности программы (наличие нужных секций, корректность меток, переменных и т.д.).
 3. Генерация машинного кода.
 
@@ -278,17 +280,17 @@ Data memory
 ``` console
 mariia@Mariia:/mnt/d/csa-lab3$ cat examples/cat.asm
 .data:
-num tmp: 0
+    num tmp:
 
 .text:
-
+      in tmp
 loop: in tmp
-out_char tmp
-jmp loop
+    out_char tmp
+        jmp loop
 end: hlt
 
-mariia@Mariia:/mnt/d/csa-lab3$ python3 translator.py examples/cat.asm target.out
-source LoC: 14 code instr: 4
+mariia@Mariia:/mnt/d/csa-lab3$ python3 translator.py examples/cat.asm target.out        
+source LoC: 15 code instr: 5
 
 mariia@Mariia:/mnt/d/csa-lab3$ cat target.out
 [
@@ -300,169 +302,108 @@ mariia@Mariia:/mnt/d/csa-lab3$ cat target.out
         ]
     },
     {
-        "opcode": "out_char",
+        "opcode": "in",
         "addr": 1,
         "args": [
             0
         ]
     },
     {
-        "opcode": "jmp",
+        "opcode": "out_char",
         "addr": 2,
         "args": [
             0
         ]
     },
     {
-        "opcode": "hlt",
+        "opcode": "jmp",
         "addr": 3,
+        "args": [
+            1
+        ]
+    },
+    {
+        "opcode": "hlt",
+        "addr": 4,
         "args": []
     }
 ]
 
-mariia@Mariia:/mnt/d/csa-lab3$python3 machine.py examples/cat_code.out examples/input.txt
+mariia@Mariia:/mnt/d/csa-lab3$ python3 machine.py target.out examples/input.txt
 DEBUG:root:{TICK: 0, ADDR: 0, PC: 0, OUT: 0, ACC: 0} 
-DEBUG:root:{TICK: 1, ADDR: 0, PC: 0, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 2, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
+DEBUG:root:{TICK: 1, ADDR: 0, PC: 0, OUT: 57, ACC: 57}
+DEBUG:root:{TICK: 2, ADDR: 0, PC: 1, OUT: 57, ACC: 57}
 DEBUG:root:{TICK: 3, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
-DEBUG:root:output: '' << 'G'
-DEBUG:root:{TICK: 4, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
+DEBUG:root:{TICK: 4, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
 DEBUG:root:{TICK: 5, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 6, ADDR: 0, PC: 0, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 7, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 8, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
+DEBUG:root:output: '' << 'G'
+DEBUG:root:{TICK: 6, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
+DEBUG:root:{TICK: 7, ADDR: 0, PC: 3, OUT: 71, ACC: 71}
+DEBUG:root:{TICK: 8, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
 DEBUG:root:{TICK: 9, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:output: 'G' << 'o'
-DEBUG:root:{TICK: 10, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
+DEBUG:root:{TICK: 10, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
 DEBUG:root:{TICK: 11, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 12, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 13, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
+DEBUG:root:output: 'G' << 'o'
+DEBUG:root:{TICK: 12, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
+DEBUG:root:{TICK: 13, ADDR: 0, PC: 3, OUT: 111, ACC: 111}
 DEBUG:root:{TICK: 14, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
 DEBUG:root:{TICK: 15, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:output: 'Go' << 'o'
-DEBUG:root:{TICK: 16, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
+DEBUG:root:{TICK: 16, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
 DEBUG:root:{TICK: 17, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 18, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 19, ADDR: 0, PC: 0, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 20, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
+DEBUG:root:output: 'Go' << 'o'
+DEBUG:root:{TICK: 18, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
+DEBUG:root:{TICK: 19, ADDR: 0, PC: 3, OUT: 111, ACC: 111}
+DEBUG:root:{TICK: 20, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
 DEBUG:root:{TICK: 21, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:output: 'Goo' << 'd'
-DEBUG:root:{TICK: 22, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 22, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
 DEBUG:root:{TICK: 23, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 24, ADDR: 0, PC: 0, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 25, ADDR: 0, PC: 0, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 26, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
+DEBUG:root:output: 'Goo' << 'd'
+DEBUG:root:{TICK: 24, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 25, ADDR: 0, PC: 3, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 26, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
 DEBUG:root:{TICK: 27, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:output: 'Good' << ' '
-DEBUG:root:{TICK: 28, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
+DEBUG:root:{TICK: 28, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
 DEBUG:root:{TICK: 29, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 30, ADDR: 0, PC: 0, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 31, ADDR: 0, PC: 0, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 32, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
+DEBUG:root:output: 'Good' << ' '
+DEBUG:root:{TICK: 30, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
+DEBUG:root:{TICK: 31, ADDR: 0, PC: 3, OUT: 32, ACC: 32}
+DEBUG:root:{TICK: 32, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
 DEBUG:root:{TICK: 33, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:output: 'Good ' << 'd'
-DEBUG:root:{TICK: 34, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 34, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
 DEBUG:root:{TICK: 35, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 36, ADDR: 0, PC: 0, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 37, ADDR: 0, PC: 0, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 38, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
+DEBUG:root:output: 'Good ' << 'd'
+DEBUG:root:{TICK: 36, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 37, ADDR: 0, PC: 3, OUT: 100, ACC: 100}
+DEBUG:root:{TICK: 38, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
 DEBUG:root:{TICK: 39, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
-DEBUG:root:output: 'Good d' << 'a'
-DEBUG:root:{TICK: 40, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
+DEBUG:root:{TICK: 40, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
 DEBUG:root:{TICK: 41, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 42, ADDR: 0, PC: 0, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 43, ADDR: 0, PC: 0, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 44, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
+DEBUG:root:output: 'Good d' << 'a'
+DEBUG:root:{TICK: 42, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
+DEBUG:root:{TICK: 43, ADDR: 0, PC: 3, OUT: 97, ACC: 97}
+DEBUG:root:{TICK: 44, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
 DEBUG:root:{TICK: 45, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:output: 'Good da' << 'y'
-DEBUG:root:{TICK: 46, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
+DEBUG:root:{TICK: 46, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
 DEBUG:root:{TICK: 47, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 48, ADDR: 0, PC: 0, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 49, ADDR: 0, PC: 0, OUT: 44, ACC: 44}
-DEBUG:root:{TICK: 50, ADDR: 0, PC: 1, OUT: 44, ACC: 44}
-DEBUG:root:{TICK: 51, ADDR: 0, PC: 1, OUT: 44, ACC: 44}
-DEBUG:root:output: 'Good day' << ','
-DEBUG:root:{TICK: 52, ADDR: 0, PC: 1, OUT: 44, ACC: 44}
-DEBUG:root:{TICK: 53, ADDR: 0, PC: 2, OUT: 44, ACC: 44}
-DEBUG:root:{TICK: 54, ADDR: 0, PC: 0, OUT: 44, ACC: 44}
-DEBUG:root:{TICK: 55, ADDR: 0, PC: 0, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 56, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 57, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:output: 'Good day,' << ' '
-DEBUG:root:{TICK: 58, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 59, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 60, ADDR: 0, PC: 0, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 61, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 62, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 63, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:output: 'Good day, ' << 'e'
-DEBUG:root:{TICK: 64, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 65, ADDR: 0, PC: 2, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 66, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 67, ADDR: 0, PC: 0, OUT: 118, ACC: 118}
-DEBUG:root:{TICK: 68, ADDR: 0, PC: 1, OUT: 118, ACC: 118}
-DEBUG:root:{TICK: 69, ADDR: 0, PC: 1, OUT: 118, ACC: 118}
-DEBUG:root:output: 'Good day, e' << 'v'
-DEBUG:root:{TICK: 70, ADDR: 0, PC: 1, OUT: 118, ACC: 118}
-DEBUG:root:{TICK: 71, ADDR: 0, PC: 2, OUT: 118, ACC: 118}
-DEBUG:root:{TICK: 72, ADDR: 0, PC: 0, OUT: 118, ACC: 118}
-DEBUG:root:{TICK: 73, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 74, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 75, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:output: 'Good day, ev' << 'e'
-DEBUG:root:{TICK: 76, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 77, ADDR: 0, PC: 2, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 78, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 79, ADDR: 0, PC: 0, OUT: 114, ACC: 114}
-DEBUG:root:{TICK: 80, ADDR: 0, PC: 1, OUT: 114, ACC: 114}
-DEBUG:root:{TICK: 81, ADDR: 0, PC: 1, OUT: 114, ACC: 114}
-DEBUG:root:output: 'Good day, eve' << 'r'
-DEBUG:root:{TICK: 82, ADDR: 0, PC: 1, OUT: 114, ACC: 114}
-DEBUG:root:{TICK: 83, ADDR: 0, PC: 2, OUT: 114, ACC: 114}
-DEBUG:root:{TICK: 84, ADDR: 0, PC: 0, OUT: 114, ACC: 114}
-DEBUG:root:{TICK: 85, ADDR: 0, PC: 0, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 86, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 87, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:output: 'Good day, ever' << 'y'
-DEBUG:root:{TICK: 88, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 89, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 90, ADDR: 0, PC: 0, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 91, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 92, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 93, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:output: 'Good day, every' << 'o'
-DEBUG:root:{TICK: 94, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 95, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 96, ADDR: 0, PC: 0, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 97, ADDR: 0, PC: 0, OUT: 110, ACC: 110}
-DEBUG:root:{TICK: 98, ADDR: 0, PC: 1, OUT: 110, ACC: 110}
-DEBUG:root:{TICK: 99, ADDR: 0, PC: 1, OUT: 110, ACC: 110}
-DEBUG:root:output: 'Good day, everyo' << 'n'
-DEBUG:root:{TICK: 100, ADDR: 0, PC: 1, OUT: 110, ACC: 110}
-DEBUG:root:{TICK: 101, ADDR: 0, PC: 2, OUT: 110, ACC: 110}
-DEBUG:root:{TICK: 102, ADDR: 0, PC: 0, OUT: 110, ACC: 110}
-DEBUG:root:{TICK: 103, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 104, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 105, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:output: 'Good day, everyon' << 'e'
-DEBUG:root:{TICK: 106, ADDR: 0, PC: 1, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 107, ADDR: 0, PC: 2, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 108, ADDR: 0, PC: 0, OUT: 101, ACC: 101}
-DEBUG:root:{TICK: 109, ADDR: 0, PC: 0, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 110, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 111, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
-DEBUG:root:output: 'Good day, everyone' << '!'
-DEBUG:root:{TICK: 112, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 113, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 114, ADDR: 0, PC: 0, OUT: 33, ACC: 33}
+DEBUG:root:output: 'Good da' << 'y'
+DEBUG:root:{TICK: 48, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
+DEBUG:root:{TICK: 49, ADDR: 0, PC: 3, OUT: 121, ACC: 121}
+DEBUG:root:{TICK: 50, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
+DEBUG:root:{TICK: 51, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
+DEBUG:root:{TICK: 52, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
+DEBUG:root:{TICK: 53, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
+DEBUG:root:output: 'Good day' << '!'
+DEBUG:root:{TICK: 54, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
+DEBUG:root:{TICK: 55, ADDR: 0, PC: 3, OUT: 33, ACC: 33}
+DEBUG:root:{TICK: 56, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
 WARNING:root:Input buffer is empty!
-INFO:root:output_buffer: 'Good day, everyone!'
-Good day, everyone!
-instr_counter: 57 ticks: 114
+INFO:root:output_buffer: 'Good day!'
+Good day!
+instr_counter: 28 ticks: 56
 
 | ФИО           | алг.      | code байт | code инстр. | инстр. | такт. | вариант                                                              |
 |---------------|-----------|-----------|-------------|--------|-------|----------------------------------------------------------------------|
-| Толстых М.А. | hello      | -         | 13          | 52     | 158   | asm | cisc | harv | hw | tick | struct | stream | port | pstr | prob1|
-| Толстых М.А. | cat        | -         | 4           | 57     | 114   | asm | cisc | harv | hw | tick | struct | stream | port | pstr | prob1|
-| Толстых М.А. | prob1      | -         | 16          | 11126  | 25851 | asm | cisc | harv | hw | tick | struct | stream | port | pstr | prob1|
-| Толстых М.А. | hello_user | -         | 16          | 11126  | 25851 | asm | cisc | harv | hw | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | hello      | -         | 7           | 53     | 162   | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | cat        | -         | 5           | 28     | 56    | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | prob1      | -         | 16          | 11126  | 25851 | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | hello_user | -         | 20          | 145    | 418   | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
