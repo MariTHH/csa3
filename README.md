@@ -269,7 +269,7 @@ Data memory
 3. [prob1](examples/prob1.asm) - программа, решающая первую задачу Эйлера.
 4. [hello_user](examples/hello_user.asm) - программа, запрашивает у пользователя его имя, считывает его, выводит на экран приветствие (< -- ввод пользователя через файл ввода, > вывод симулятора)
 
-Реализация интеграционных тестов: [machine_integration_test](/integration-tests/machine_integration_test.py) и [translator_integration_test](/integration-tests/translator_integration_test.py)
+Реализация интеграционных тестов: [machine_integration_test](./machine_integration_test.py) и [translator_integration_test](./translator_integration_test.py)
 
 Реализация golden-тестов: [golden_test](./golden_test.py)
 
