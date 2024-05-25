@@ -1,7 +1,4 @@
 """Типы данных для представления и сериализации/десериализации машинного кода."""
-# !/usr/bin/python3
-# pylint: disable=missing-function-docstring  # чтобы не быть Капитаном Очевидностью
-
 import json
 from enum import Enum
 
