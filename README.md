@@ -234,7 +234,7 @@ Data memory
 
 ## ControlUnit
 
-![control unit](images/ControlUnit.png)
+![control unit](images/Controlunit.png)
 
 Реализовация: класс `ControlUnit`.
 
