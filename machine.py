@@ -3,7 +3,6 @@ import sys
 from enum import Enum
 from isa import Opcode, read_code, inst_to_mc
 
-
 class AluLeftMuxSignals(Enum):
     """Сигналы для левого входа АЛУ."""
 
