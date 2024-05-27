@@ -20,7 +20,6 @@ command2opcode = {
     "save": Opcode.SAVE,
 }
 
-
 def translate(text):
     code = []
     labels = {}
