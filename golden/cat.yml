@@ -110,3 +110,4 @@ log: |
   DEBUG    root:machine.py:138 {TICK: 54, ADDR: 0, PC: 0, OUT: 33, ACC: 33} 
   WARNING  root:machine.py:287 Input buffer is empty!
   INFO     root:machine.py:291 output_buffer: 'Good day!'
+
