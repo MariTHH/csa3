@@ -43,4 +43,3 @@ def test_whole_by_golden(golden, caplog):
         assert code == golden.out["code"]
         assert stdout.getvalue() == golden.out["output"]
         assert caplog.text == golden.out["log"]
-

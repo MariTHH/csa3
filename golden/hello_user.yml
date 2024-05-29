@@ -552,3 +552,4 @@ log: |
   DEBUG    root:machine.py:138 {TICK: 374, ADDR: 28, PC: 11, OUT: 97, ACC: 97} 
   WARNING  root:machine.py:287 Input buffer is empty!
   INFO     root:machine.py:291 output_buffer: 'What is your name? Hello, maria'
+

@@ -250,3 +250,4 @@ log: |
   DEBUG    root:machine.py:138 {TICK: 161, ADDR: 13, PC: 4, OUT: 13, ACC: 0} 
   DEBUG    root:machine.py:138 {TICK: 162, ADDR: 13, PC: 6, OUT: 13, ACC: 0} 
   INFO     root:machine.py:291 output_buffer: 'Hello world!'
+
