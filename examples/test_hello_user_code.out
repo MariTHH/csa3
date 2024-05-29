@@ -3,31 +3,31 @@
         "opcode": "mov",
         "addr": 0,
         "args": [
-            32,
-            31
+            31,
+            30
         ]
     },
     {
         "opcode": "add",
         "addr": 1,
         "args": [
-            31,
-            33
+            30,
+            32
         ]
     },
     {
         "opcode": "out_rel",
         "addr": 2,
         "args": [
-            31
+            30
         ]
     },
     {
         "opcode": "cmp_rel_inc",
         "addr": 3,
         "args": [
-            31,
-            34
+            30,
+            33
         ]
     },
     {
@@ -48,23 +48,23 @@
         "opcode": "mov",
         "addr": 6,
         "args": [
-            35,
-            31
+            34,
+            30
         ]
     },
     {
         "opcode": "out_rel",
         "addr": 7,
         "args": [
-            31
+            30
         ]
     },
     {
         "opcode": "cmp_rel_inc",
         "addr": 8,
         "args": [
-            31,
-            36
+            30,
+            35
         ]
     },
     {
@@ -85,63 +85,26 @@
         "opcode": "in",
         "addr": 11,
         "args": [
-            29
-        ]
-    },
-    {
-        "opcode": "save",
-        "addr": 12,
-        "args": [
-            30
-        ]
-    },
-    {
-        "opcode": "in",
-        "addr": 13,
-        "args": [
-            29
+            28
         ]
     },
     {
         "opcode": "out_char",
-        "addr": 14,
+        "addr": 12,
         "args": [
-            29
-        ]
-    },
-    {
-        "opcode": "add",
-        "addr": 15,
-        "args": [
-            30,
-            37
-        ]
-    },
-    {
-        "opcode": "cmp",
-        "addr": 16,
-        "args": [
-            38,
-            30
-        ]
-    },
-    {
-        "opcode": "je",
-        "addr": 17,
-        "args": [
-            19
+            28
         ]
     },
     {
         "opcode": "jmp",
-        "addr": 18,
+        "addr": 13,
         "args": [
-            13
+            11
         ]
     },
     {
         "opcode": "hlt",
-        "addr": 19,
+        "addr": 14,
         "args": []
     }
 ]
