@@ -3,31 +3,31 @@
         "opcode": "mov",
         "addr": 0,
         "args": [
-            16,
-            15
+            14,
+            13
         ]
     },
     {
         "opcode": "add",
         "addr": 1,
         "args": [
-            15,
-            17
+            13,
+            15
         ]
     },
     {
         "opcode": "out_rel",
         "addr": 2,
         "args": [
-            15
+            13
         ]
     },
     {
         "opcode": "cmp_rel_inc",
         "addr": 3,
         "args": [
-            15,
-            18
+            13,
+            16
         ]
     },
     {
