@@ -8,7 +8,7 @@
 Без усложнения  ```asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1```
 
 * ЯП, Синтаксис: asm; Необходима поддержка label-ов
-* Архитектура: cisc; Система команд должна содержать сложные инструкции переменной длины и разрешающие адресацию как регистров, так и памяти
+* Архитектура: cisc;
 * Организация памяти: harv - Гарвардская архитектура
 * Control Unit: mc;
 * Точность модели: tick; Процессор необходимо моделировать с точности до такта
@@ -300,14 +300,14 @@ mariia@Mariia:/mnt/d/csa-lab3$ cat examples/cat.asm
     num tmp:
 
 .text:
-      in tmp
+      
 loop: in tmp
     out_char tmp
         jmp loop
 end: hlt
 
 mariia@Mariia:/mnt/d/csa-lab3$ python3 translator.py examples/cat.asm target.out        
-source LoC: 15 code instr: 5
+source LoC: 14 code instr: 4
 
 mariia@Mariia:/mnt/d/csa-lab3$ cat target.out
 [
@@ -347,80 +347,78 @@ mariia@Mariia:/mnt/d/csa-lab3$ cat target.out
 ]
 
 mariia@Mariia:/mnt/d/csa-lab3$ python3 machine.py target.out examples/input.txt
-DEBUG:root:{TICK: 0, ADDR: 0, PC: 0, OUT: 0, ACC: 0} 
-DEBUG:root:{TICK: 1, ADDR: 0, PC: 0, OUT: 57, ACC: 57}
-DEBUG:root:{TICK: 2, ADDR: 0, PC: 1, OUT: 57, ACC: 57}
-DEBUG:root:{TICK: 3, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 4, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 5, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
-DEBUG:root:output: '' << 'G'
-DEBUG:root:{TICK: 6, ADDR: 0, PC: 2, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 7, ADDR: 0, PC: 3, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 8, ADDR: 0, PC: 1, OUT: 71, ACC: 71}
-DEBUG:root:{TICK: 9, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 10, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 11, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:output: 'G' << 'o'
-DEBUG:root:{TICK: 12, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 13, ADDR: 0, PC: 3, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 14, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 15, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 16, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 17, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:output: 'Go' << 'o'
-DEBUG:root:{TICK: 18, ADDR: 0, PC: 2, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 19, ADDR: 0, PC: 3, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 20, ADDR: 0, PC: 1, OUT: 111, ACC: 111}
-DEBUG:root:{TICK: 21, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 22, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 23, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:output: 'Goo' << 'd'
-DEBUG:root:{TICK: 24, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 25, ADDR: 0, PC: 3, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 26, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 27, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 28, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 29, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
-DEBUG:root:output: 'Good' << ' '
-DEBUG:root:{TICK: 30, ADDR: 0, PC: 2, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 31, ADDR: 0, PC: 3, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 32, ADDR: 0, PC: 1, OUT: 32, ACC: 32}
-DEBUG:root:{TICK: 33, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 34, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 35, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:output: 'Good ' << 'd'
-DEBUG:root:{TICK: 36, ADDR: 0, PC: 2, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 37, ADDR: 0, PC: 3, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 38, ADDR: 0, PC: 1, OUT: 100, ACC: 100}
-DEBUG:root:{TICK: 39, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 40, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 41, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
-DEBUG:root:output: 'Good d' << 'a'
-DEBUG:root:{TICK: 42, ADDR: 0, PC: 2, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 43, ADDR: 0, PC: 3, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 44, ADDR: 0, PC: 1, OUT: 97, ACC: 97}
-DEBUG:root:{TICK: 45, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 46, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 47, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
-DEBUG:root:output: 'Good da' << 'y'
-DEBUG:root:{TICK: 48, ADDR: 0, PC: 2, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 49, ADDR: 0, PC: 3, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 50, ADDR: 0, PC: 1, OUT: 121, ACC: 121}
-DEBUG:root:{TICK: 51, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 52, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 53, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
-DEBUG:root:output: 'Good day' << '!'
-DEBUG:root:{TICK: 54, ADDR: 0, PC: 2, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 55, ADDR: 0, PC: 3, OUT: 33, ACC: 33}
-DEBUG:root:{TICK: 56, ADDR: 0, PC: 1, OUT: 33, ACC: 33}
-WARNING:root:Input buffer is empty!
-INFO:root:output_buffer: 'Good day!'
-Good day!
-instr_counter: 28 ticks: 56
+  DEBUG    root:machine.py:277 {TICK: 0, ADDR: 0, PC: 0, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:138 {TICK: 1, ADDR: 0, PC: 0, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:138 {TICK: 2, ADDR: 0, PC: 1, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:138 {TICK: 3, ADDR: 0, PC: 1, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:100 output: '' << 'G'
+  DEBUG    root:machine.py:138 {TICK: 4, ADDR: 0, PC: 1, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:138 {TICK: 5, ADDR: 0, PC: 2, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:138 {TICK: 6, ADDR: 0, PC: 0, OUT: 71, ACC: 71} 
+  DEBUG    root:machine.py:138 {TICK: 7, ADDR: 0, PC: 0, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 8, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 9, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:100 output: 'G' << 'o'
+  DEBUG    root:machine.py:138 {TICK: 10, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 11, ADDR: 0, PC: 2, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 12, ADDR: 0, PC: 0, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 13, ADDR: 0, PC: 0, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 14, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 15, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:100 output: 'Go' << 'o'
+  DEBUG    root:machine.py:138 {TICK: 16, ADDR: 0, PC: 1, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 17, ADDR: 0, PC: 2, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 18, ADDR: 0, PC: 0, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:138 {TICK: 19, ADDR: 0, PC: 0, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 20, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 21, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:100 output: 'Goo' << 'd'
+  DEBUG    root:machine.py:138 {TICK: 22, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 23, ADDR: 0, PC: 2, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 24, ADDR: 0, PC: 0, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 25, ADDR: 0, PC: 0, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:138 {TICK: 26, ADDR: 0, PC: 1, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:138 {TICK: 27, ADDR: 0, PC: 1, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:100 output: 'Good' << ' '
+  DEBUG    root:machine.py:138 {TICK: 28, ADDR: 0, PC: 1, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:138 {TICK: 29, ADDR: 0, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:138 {TICK: 30, ADDR: 0, PC: 0, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:138 {TICK: 31, ADDR: 0, PC: 0, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 32, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 33, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:100 output: 'Good ' << 'd'
+  DEBUG    root:machine.py:138 {TICK: 34, ADDR: 0, PC: 1, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 35, ADDR: 0, PC: 2, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 36, ADDR: 0, PC: 0, OUT: 100, ACC: 100} 
+  DEBUG    root:machine.py:138 {TICK: 37, ADDR: 0, PC: 0, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:138 {TICK: 38, ADDR: 0, PC: 1, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:138 {TICK: 39, ADDR: 0, PC: 1, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:100 output: 'Good d' << 'a'
+  DEBUG    root:machine.py:138 {TICK: 40, ADDR: 0, PC: 1, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:138 {TICK: 41, ADDR: 0, PC: 2, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:138 {TICK: 42, ADDR: 0, PC: 0, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:138 {TICK: 43, ADDR: 0, PC: 0, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:138 {TICK: 44, ADDR: 0, PC: 1, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:138 {TICK: 45, ADDR: 0, PC: 1, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:100 output: 'Good da' << 'y'
+  DEBUG    root:machine.py:138 {TICK: 46, ADDR: 0, PC: 1, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:138 {TICK: 47, ADDR: 0, PC: 2, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:138 {TICK: 48, ADDR: 0, PC: 0, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:138 {TICK: 49, ADDR: 0, PC: 0, OUT: 33, ACC: 33} 
+  DEBUG    root:machine.py:138 {TICK: 50, ADDR: 0, PC: 1, OUT: 33, ACC: 33} 
+  DEBUG    root:machine.py:138 {TICK: 51, ADDR: 0, PC: 1, OUT: 33, ACC: 33} 
+  DEBUG    root:machine.py:100 output: 'Good day' << '!'
+  DEBUG    root:machine.py:138 {TICK: 52, ADDR: 0, PC: 1, OUT: 33, ACC: 33} 
+  DEBUG    root:machine.py:138 {TICK: 53, ADDR: 0, PC: 2, OUT: 33, ACC: 33} 
+  DEBUG    root:machine.py:138 {TICK: 54, ADDR: 0, PC: 0, OUT: 33, ACC: 33} 
+  WARNING  root:machine.py:287 Input buffer is empty!
+  INFO     root:machine.py:291 output_buffer: 'Good day!'
+  Good day!
+  instr_counter: 27 ticks: 54
 
 | ФИО           | алг.      | code байт | code инстр. | инстр. | такт. | вариант                                                              |
 |---------------|-----------|-----------|-------------|--------|-------|----------------------------------------------------------------------|
 | Толстых М.А. | hello      | -         | 7           | 53     | 162   | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
-| Толстых М.А. | cat        | -         | 5           | 28     | 56    | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | cat        | -         | 4           | 27     | 54    | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
 | Толстых М.А. | prob1      | -         | 16          | 11126  | 25851 | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
-| Толстых М.А. | hello_user | -         | 20          | 145    | 418   | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
+| Толстых М.А. | hello_user | -         | 15          | 128    | 374   | asm | cisc | harv | mc | tick | struct | stream | port | pstr | prob1|
