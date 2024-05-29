@@ -24,7 +24,7 @@ source: |-
 
   end:       out sum
              hlt
-input: |-
+input: |
 
 code: |-
   [
