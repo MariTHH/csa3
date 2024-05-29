@@ -25,8 +25,6 @@ class Opcode(str, Enum):
     JE = "je"
     SAVE = "save"
 
-    ASK = "ask"
-
 
 inst_to_mc = {
     "hlt": [17],
