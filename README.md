@@ -189,25 +189,6 @@ Data memory
 | `jump_instr`/`jmp_zero`                                      | Переход по памяти команд                     |
 | `stop_program`                                               | Останов                                      |
 
-Микрокоманды каждой инструкции
-
-* mov: 0 (read_first_arg), 3 (write_acc_by_first_arg), 15 (next_instr)
-* cmp: 0 (read_first_arg), 6 (alu_cmp), 15 (next_instr)
-* cmp_rel_inc: 0 (read_first_arg), 2 (inc_addr), 6 (alu_cmp), 12 (write_br), 5 (write_acc_by_second_arg), 15 (next_instr)
-* rdiv: 0 (read_first_arg), 7 (alu_rdiv), 15 (next_instr)
-* add: 0 (read_first_arg), 8 (alu_add), 4 (write_acc_by_second_arg), 15 (next_instr)
-* sub: 0 (read_first_arg), 9 (alu_sub), 4 (write_acc_by_second_arg), 15 (next_instr)
-* mul: 0 (read_first_arg), 10 (alu_mul), 4 (write_acc_by_second_arg), 15 (next_instr)
-* div: 0 (read_first_arg), 11 (alu_div), 4 (write_acc_by_second_arg), 15 (next_instr)
-* in: 1 (write_from_input), 15 (next_instr)
-* out: 0 (read_first_arg), 13 (out_num), 15 (next_instr)
-* out_char: 0 (read_first_arg), 14 (out_char), 15 (next_instr)
-* out_rel: 0 (read_first_arg), 2 (inc_addr), 14 (out_char), 15 (next_instr)
-* jmp: 16 (jump_instr)
-* je: 18 (jmp_zero)
-* save: 4 (write_acc_by_second_arg), 15 (next_instr)
-* hlt: 17 (stop_program)
-
 ## Транслятор
 
 Интерфейс командной строки: `translator.py <input_file> <target_file>`
