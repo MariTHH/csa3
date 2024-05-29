@@ -8,7 +8,7 @@ source: |-
 
   .text:
     mov [prompt] cur_ind
-    add cur_ind 1
+    add cur_ind 0
   ask: out# cur_ind
     cmp* cur_ind 0
     je greet
@@ -16,22 +16,17 @@ source: |-
   greet: mov [greeting] cur_ind
   loop: out# cur_ind
     cmp* cur_ind 0
-    je name_count
+    je naming
     jmp loop
-  name_count: in name
-    save nameCounter
   naming: in name
-    out_char name
-    add nameCounter -1
-    cmp 0 nameCounter
-    je end
-    jmp naming
+        out_char name
+        jmp naming
 
   end:    hlt
 
 
 input: |-
-  5, 'm', 'a', 'r', 'i', 'a'
+  'm', 'a', 'r', 'i', 'a'
 code: |-
   [
       {
@@ -124,518 +119,450 @@ code: |-
           ]
       },
       {
-          "opcode": "save",
+          "opcode": "out_char",
           "addr": 12,
           "args": [
-              30
-          ]
-      },
-      {
-          "opcode": "in",
-          "addr": 13,
-          "args": [
               29
-          ]
-      },
-      {
-          "opcode": "out_char",
-          "addr": 14,
-          "args": [
-              29
-          ]
-      },
-      {
-          "opcode": "add",
-          "addr": 15,
-          "args": [
-              30,
-              37
-          ]
-      },
-      {
-          "opcode": "cmp",
-          "addr": 16,
-          "args": [
-              38,
-              30
-          ]
-      },
-      {
-          "opcode": "je",
-          "addr": 17,
-          "args": [
-              19
           ]
       },
       {
           "opcode": "jmp",
-          "addr": 18,
+          "addr": 13,
           "args": [
-              13
+              11
           ]
       },
       {
           "opcode": "hlt",
-          "addr": 19,
+          "addr": 14,
           "args": []
       }
   ]
 output: |
-  source LoC: 100 code instr: 20
+  source LoC: 87 code instr: 15
   ============================================================
-  What is your name? Hello, maria
-  instr_counter: 145 ticks: 418
+  8What is your name? Hello, maria
+  instr_counter: 132 ticks: 386
 log: |
-  DEBUG    root:machine.py:277 {TICK: 0, ADDR: 0, PC: 0, OUT: 56, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 1, ADDR: 32, PC: 0, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 2, ADDR: 31, PC: 0, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 3, ADDR: 31, PC: 1, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 4, ADDR: 31, PC: 1, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 5, ADDR: 33, PC: 1, OUT: 1, ACC: 1} 
-  DEBUG    root:machine.py:138 {TICK: 6, ADDR: 31, PC: 1, OUT: 1, ACC: 1} 
-  DEBUG    root:machine.py:138 {TICK: 7, ADDR: 31, PC: 2, OUT: 1, ACC: 1} 
-  DEBUG    root:machine.py:138 {TICK: 8, ADDR: 31, PC: 2, OUT: 1, ACC: 1} 
-  DEBUG    root:machine.py:138 {TICK: 9, ADDR: 1, PC: 2, OUT: 87, ACC: 87} 
-  DEBUG    root:machine.py:100 output: '' << 'W'
-  DEBUG    root:machine.py:138 {TICK: 10, ADDR: 1, PC: 2, OUT: 87, ACC: 87} 
-  DEBUG    root:machine.py:138 {TICK: 11, ADDR: 1, PC: 3, OUT: 87, ACC: 87} 
-  DEBUG    root:machine.py:138 {TICK: 12, ADDR: 31, PC: 3, OUT: 1, ACC: 1} 
-  DEBUG    root:machine.py:138 {TICK: 13, ADDR: 1, PC: 3, OUT: 87, ACC: 87} 
-  DEBUG    root:machine.py:138 {TICK: 14, ADDR: 34, PC: 3, OUT: 0, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 15, ADDR: 31, PC: 3, OUT: 1, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 16, ADDR: 31, PC: 3, OUT: 2, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 17, ADDR: 31, PC: 4, OUT: 2, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 18, ADDR: 31, PC: 5, OUT: 2, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 19, ADDR: 31, PC: 2, OUT: 2, ACC: -87} 
-  DEBUG    root:machine.py:138 {TICK: 20, ADDR: 31, PC: 2, OUT: 2, ACC: 2} 
-  DEBUG    root:machine.py:138 {TICK: 21, ADDR: 2, PC: 2, OUT: 104, ACC: 104} 
-  DEBUG    root:machine.py:100 output: 'W' << 'h'
-  DEBUG    root:machine.py:138 {TICK: 22, ADDR: 2, PC: 2, OUT: 104, ACC: 104} 
-  DEBUG    root:machine.py:138 {TICK: 23, ADDR: 2, PC: 3, OUT: 104, ACC: 104} 
-  DEBUG    root:machine.py:138 {TICK: 24, ADDR: 31, PC: 3, OUT: 2, ACC: 2} 
-  DEBUG    root:machine.py:138 {TICK: 25, ADDR: 2, PC: 3, OUT: 104, ACC: 104} 
-  DEBUG    root:machine.py:138 {TICK: 26, ADDR: 34, PC: 3, OUT: 0, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 27, ADDR: 31, PC: 3, OUT: 2, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 28, ADDR: 31, PC: 3, OUT: 3, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 29, ADDR: 31, PC: 4, OUT: 3, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 30, ADDR: 31, PC: 5, OUT: 3, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 31, ADDR: 31, PC: 2, OUT: 3, ACC: -104} 
-  DEBUG    root:machine.py:138 {TICK: 32, ADDR: 31, PC: 2, OUT: 3, ACC: 3} 
-  DEBUG    root:machine.py:138 {TICK: 33, ADDR: 3, PC: 2, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:100 output: 'Wh' << 'a'
-  DEBUG    root:machine.py:138 {TICK: 34, ADDR: 3, PC: 2, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 35, ADDR: 3, PC: 3, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 36, ADDR: 31, PC: 3, OUT: 3, ACC: 3} 
-  DEBUG    root:machine.py:138 {TICK: 37, ADDR: 3, PC: 3, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 38, ADDR: 34, PC: 3, OUT: 0, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 39, ADDR: 31, PC: 3, OUT: 3, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 40, ADDR: 31, PC: 3, OUT: 4, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 41, ADDR: 31, PC: 4, OUT: 4, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 42, ADDR: 31, PC: 5, OUT: 4, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 43, ADDR: 31, PC: 2, OUT: 4, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 44, ADDR: 31, PC: 2, OUT: 4, ACC: 4} 
-  DEBUG    root:machine.py:138 {TICK: 45, ADDR: 4, PC: 2, OUT: 116, ACC: 116} 
-  DEBUG    root:machine.py:100 output: 'Wha' << 't'
-  DEBUG    root:machine.py:138 {TICK: 46, ADDR: 4, PC: 2, OUT: 116, ACC: 116} 
-  DEBUG    root:machine.py:138 {TICK: 47, ADDR: 4, PC: 3, OUT: 116, ACC: 116} 
-  DEBUG    root:machine.py:138 {TICK: 48, ADDR: 31, PC: 3, OUT: 4, ACC: 4} 
-  DEBUG    root:machine.py:138 {TICK: 49, ADDR: 4, PC: 3, OUT: 116, ACC: 116} 
-  DEBUG    root:machine.py:138 {TICK: 50, ADDR: 34, PC: 3, OUT: 0, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 51, ADDR: 31, PC: 3, OUT: 4, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 52, ADDR: 31, PC: 3, OUT: 5, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 53, ADDR: 31, PC: 4, OUT: 5, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 54, ADDR: 31, PC: 5, OUT: 5, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 55, ADDR: 31, PC: 2, OUT: 5, ACC: -116} 
-  DEBUG    root:machine.py:138 {TICK: 56, ADDR: 31, PC: 2, OUT: 5, ACC: 5} 
-  DEBUG    root:machine.py:138 {TICK: 57, ADDR: 5, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:100 output: 'What' << ' '
-  DEBUG    root:machine.py:138 {TICK: 58, ADDR: 5, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 59, ADDR: 5, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 60, ADDR: 31, PC: 3, OUT: 5, ACC: 5} 
-  DEBUG    root:machine.py:138 {TICK: 61, ADDR: 5, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 62, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 63, ADDR: 31, PC: 3, OUT: 5, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 64, ADDR: 31, PC: 3, OUT: 6, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 65, ADDR: 31, PC: 4, OUT: 6, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 66, ADDR: 31, PC: 5, OUT: 6, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 67, ADDR: 31, PC: 2, OUT: 6, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 68, ADDR: 31, PC: 2, OUT: 6, ACC: 6} 
-  DEBUG    root:machine.py:138 {TICK: 69, ADDR: 6, PC: 2, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:100 output: 'What ' << 'i'
-  DEBUG    root:machine.py:138 {TICK: 70, ADDR: 6, PC: 2, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 71, ADDR: 6, PC: 3, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 72, ADDR: 31, PC: 3, OUT: 6, ACC: 6} 
-  DEBUG    root:machine.py:138 {TICK: 73, ADDR: 6, PC: 3, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 74, ADDR: 34, PC: 3, OUT: 0, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 75, ADDR: 31, PC: 3, OUT: 6, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 76, ADDR: 31, PC: 3, OUT: 7, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 77, ADDR: 31, PC: 4, OUT: 7, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 78, ADDR: 31, PC: 5, OUT: 7, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 79, ADDR: 31, PC: 2, OUT: 7, ACC: -105} 
-  DEBUG    root:machine.py:138 {TICK: 80, ADDR: 31, PC: 2, OUT: 7, ACC: 7} 
-  DEBUG    root:machine.py:138 {TICK: 81, ADDR: 7, PC: 2, OUT: 115, ACC: 115} 
-  DEBUG    root:machine.py:100 output: 'What i' << 's'
-  DEBUG    root:machine.py:138 {TICK: 82, ADDR: 7, PC: 2, OUT: 115, ACC: 115} 
-  DEBUG    root:machine.py:138 {TICK: 83, ADDR: 7, PC: 3, OUT: 115, ACC: 115} 
-  DEBUG    root:machine.py:138 {TICK: 84, ADDR: 31, PC: 3, OUT: 7, ACC: 7} 
-  DEBUG    root:machine.py:138 {TICK: 85, ADDR: 7, PC: 3, OUT: 115, ACC: 115} 
-  DEBUG    root:machine.py:138 {TICK: 86, ADDR: 34, PC: 3, OUT: 0, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 87, ADDR: 31, PC: 3, OUT: 7, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 88, ADDR: 31, PC: 3, OUT: 8, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 89, ADDR: 31, PC: 4, OUT: 8, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 90, ADDR: 31, PC: 5, OUT: 8, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 91, ADDR: 31, PC: 2, OUT: 8, ACC: -115} 
-  DEBUG    root:machine.py:138 {TICK: 92, ADDR: 31, PC: 2, OUT: 8, ACC: 8} 
-  DEBUG    root:machine.py:138 {TICK: 93, ADDR: 8, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:100 output: 'What is' << ' '
-  DEBUG    root:machine.py:138 {TICK: 94, ADDR: 8, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 95, ADDR: 8, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 96, ADDR: 31, PC: 3, OUT: 8, ACC: 8} 
-  DEBUG    root:machine.py:138 {TICK: 97, ADDR: 8, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 98, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 99, ADDR: 31, PC: 3, OUT: 8, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 100, ADDR: 31, PC: 3, OUT: 9, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 101, ADDR: 31, PC: 4, OUT: 9, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 102, ADDR: 31, PC: 5, OUT: 9, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 103, ADDR: 31, PC: 2, OUT: 9, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 104, ADDR: 31, PC: 2, OUT: 9, ACC: 9} 
-  DEBUG    root:machine.py:138 {TICK: 105, ADDR: 9, PC: 2, OUT: 121, ACC: 121} 
-  DEBUG    root:machine.py:100 output: 'What is ' << 'y'
-  DEBUG    root:machine.py:138 {TICK: 106, ADDR: 9, PC: 2, OUT: 121, ACC: 121} 
-  DEBUG    root:machine.py:138 {TICK: 107, ADDR: 9, PC: 3, OUT: 121, ACC: 121} 
-  DEBUG    root:machine.py:138 {TICK: 108, ADDR: 31, PC: 3, OUT: 9, ACC: 9} 
-  DEBUG    root:machine.py:138 {TICK: 109, ADDR: 9, PC: 3, OUT: 121, ACC: 121} 
-  DEBUG    root:machine.py:138 {TICK: 110, ADDR: 34, PC: 3, OUT: 0, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 111, ADDR: 31, PC: 3, OUT: 9, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 112, ADDR: 31, PC: 3, OUT: 10, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 113, ADDR: 31, PC: 4, OUT: 10, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 114, ADDR: 31, PC: 5, OUT: 10, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 115, ADDR: 31, PC: 2, OUT: 10, ACC: -121} 
-  DEBUG    root:machine.py:138 {TICK: 116, ADDR: 31, PC: 2, OUT: 10, ACC: 10} 
-  DEBUG    root:machine.py:138 {TICK: 117, ADDR: 10, PC: 2, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:100 output: 'What is y' << 'o'
-  DEBUG    root:machine.py:138 {TICK: 118, ADDR: 10, PC: 2, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 119, ADDR: 10, PC: 3, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 120, ADDR: 31, PC: 3, OUT: 10, ACC: 10} 
-  DEBUG    root:machine.py:138 {TICK: 121, ADDR: 10, PC: 3, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 122, ADDR: 34, PC: 3, OUT: 0, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 123, ADDR: 31, PC: 3, OUT: 10, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 124, ADDR: 31, PC: 3, OUT: 11, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 125, ADDR: 31, PC: 4, OUT: 11, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 126, ADDR: 31, PC: 5, OUT: 11, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 127, ADDR: 31, PC: 2, OUT: 11, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 128, ADDR: 31, PC: 2, OUT: 11, ACC: 11} 
-  DEBUG    root:machine.py:138 {TICK: 129, ADDR: 11, PC: 2, OUT: 117, ACC: 117} 
-  DEBUG    root:machine.py:100 output: 'What is yo' << 'u'
-  DEBUG    root:machine.py:138 {TICK: 130, ADDR: 11, PC: 2, OUT: 117, ACC: 117} 
-  DEBUG    root:machine.py:138 {TICK: 131, ADDR: 11, PC: 3, OUT: 117, ACC: 117} 
-  DEBUG    root:machine.py:138 {TICK: 132, ADDR: 31, PC: 3, OUT: 11, ACC: 11} 
-  DEBUG    root:machine.py:138 {TICK: 133, ADDR: 11, PC: 3, OUT: 117, ACC: 117} 
-  DEBUG    root:machine.py:138 {TICK: 134, ADDR: 34, PC: 3, OUT: 0, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 135, ADDR: 31, PC: 3, OUT: 11, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 136, ADDR: 31, PC: 3, OUT: 12, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 137, ADDR: 31, PC: 4, OUT: 12, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 138, ADDR: 31, PC: 5, OUT: 12, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 139, ADDR: 31, PC: 2, OUT: 12, ACC: -117} 
-  DEBUG    root:machine.py:138 {TICK: 140, ADDR: 31, PC: 2, OUT: 12, ACC: 12} 
-  DEBUG    root:machine.py:138 {TICK: 141, ADDR: 12, PC: 2, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:100 output: 'What is you' << 'r'
-  DEBUG    root:machine.py:138 {TICK: 142, ADDR: 12, PC: 2, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 143, ADDR: 12, PC: 3, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 144, ADDR: 31, PC: 3, OUT: 12, ACC: 12} 
-  DEBUG    root:machine.py:138 {TICK: 145, ADDR: 12, PC: 3, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 146, ADDR: 34, PC: 3, OUT: 0, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 147, ADDR: 31, PC: 3, OUT: 12, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 148, ADDR: 31, PC: 3, OUT: 13, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 149, ADDR: 31, PC: 4, OUT: 13, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 150, ADDR: 31, PC: 5, OUT: 13, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 151, ADDR: 31, PC: 2, OUT: 13, ACC: -114} 
-  DEBUG    root:machine.py:138 {TICK: 152, ADDR: 31, PC: 2, OUT: 13, ACC: 13} 
-  DEBUG    root:machine.py:138 {TICK: 153, ADDR: 13, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:100 output: 'What is your' << ' '
-  DEBUG    root:machine.py:138 {TICK: 154, ADDR: 13, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 155, ADDR: 13, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 156, ADDR: 31, PC: 3, OUT: 13, ACC: 13} 
-  DEBUG    root:machine.py:138 {TICK: 157, ADDR: 13, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 158, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 159, ADDR: 31, PC: 3, OUT: 13, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 160, ADDR: 31, PC: 3, OUT: 14, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 161, ADDR: 31, PC: 4, OUT: 14, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 162, ADDR: 31, PC: 5, OUT: 14, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 163, ADDR: 31, PC: 2, OUT: 14, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 164, ADDR: 31, PC: 2, OUT: 14, ACC: 14} 
-  DEBUG    root:machine.py:138 {TICK: 165, ADDR: 14, PC: 2, OUT: 110, ACC: 110} 
-  DEBUG    root:machine.py:100 output: 'What is your ' << 'n'
-  DEBUG    root:machine.py:138 {TICK: 166, ADDR: 14, PC: 2, OUT: 110, ACC: 110} 
-  DEBUG    root:machine.py:138 {TICK: 167, ADDR: 14, PC: 3, OUT: 110, ACC: 110} 
-  DEBUG    root:machine.py:138 {TICK: 168, ADDR: 31, PC: 3, OUT: 14, ACC: 14} 
-  DEBUG    root:machine.py:138 {TICK: 169, ADDR: 14, PC: 3, OUT: 110, ACC: 110} 
-  DEBUG    root:machine.py:138 {TICK: 170, ADDR: 34, PC: 3, OUT: 0, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 171, ADDR: 31, PC: 3, OUT: 14, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 172, ADDR: 31, PC: 3, OUT: 15, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 173, ADDR: 31, PC: 4, OUT: 15, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 174, ADDR: 31, PC: 5, OUT: 15, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 175, ADDR: 31, PC: 2, OUT: 15, ACC: -110} 
-  DEBUG    root:machine.py:138 {TICK: 176, ADDR: 31, PC: 2, OUT: 15, ACC: 15} 
-  DEBUG    root:machine.py:138 {TICK: 177, ADDR: 15, PC: 2, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:100 output: 'What is your n' << 'a'
-  DEBUG    root:machine.py:138 {TICK: 178, ADDR: 15, PC: 2, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 179, ADDR: 15, PC: 3, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 180, ADDR: 31, PC: 3, OUT: 15, ACC: 15} 
-  DEBUG    root:machine.py:138 {TICK: 181, ADDR: 15, PC: 3, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 182, ADDR: 34, PC: 3, OUT: 0, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 183, ADDR: 31, PC: 3, OUT: 15, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 184, ADDR: 31, PC: 3, OUT: 16, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 185, ADDR: 31, PC: 4, OUT: 16, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 186, ADDR: 31, PC: 5, OUT: 16, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 187, ADDR: 31, PC: 2, OUT: 16, ACC: -97} 
-  DEBUG    root:machine.py:138 {TICK: 188, ADDR: 31, PC: 2, OUT: 16, ACC: 16} 
-  DEBUG    root:machine.py:138 {TICK: 189, ADDR: 16, PC: 2, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:100 output: 'What is your na' << 'm'
-  DEBUG    root:machine.py:138 {TICK: 190, ADDR: 16, PC: 2, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 191, ADDR: 16, PC: 3, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 192, ADDR: 31, PC: 3, OUT: 16, ACC: 16} 
-  DEBUG    root:machine.py:138 {TICK: 193, ADDR: 16, PC: 3, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 194, ADDR: 34, PC: 3, OUT: 0, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 195, ADDR: 31, PC: 3, OUT: 16, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 196, ADDR: 31, PC: 3, OUT: 17, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 197, ADDR: 31, PC: 4, OUT: 17, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 198, ADDR: 31, PC: 5, OUT: 17, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 199, ADDR: 31, PC: 2, OUT: 17, ACC: -109} 
-  DEBUG    root:machine.py:138 {TICK: 200, ADDR: 31, PC: 2, OUT: 17, ACC: 17} 
-  DEBUG    root:machine.py:138 {TICK: 201, ADDR: 17, PC: 2, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:100 output: 'What is your nam' << 'e'
-  DEBUG    root:machine.py:138 {TICK: 202, ADDR: 17, PC: 2, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 203, ADDR: 17, PC: 3, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 204, ADDR: 31, PC: 3, OUT: 17, ACC: 17} 
-  DEBUG    root:machine.py:138 {TICK: 205, ADDR: 17, PC: 3, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 206, ADDR: 34, PC: 3, OUT: 0, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 207, ADDR: 31, PC: 3, OUT: 17, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 208, ADDR: 31, PC: 3, OUT: 18, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 209, ADDR: 31, PC: 4, OUT: 18, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 210, ADDR: 31, PC: 5, OUT: 18, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 211, ADDR: 31, PC: 2, OUT: 18, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 212, ADDR: 31, PC: 2, OUT: 18, ACC: 18} 
-  DEBUG    root:machine.py:138 {TICK: 213, ADDR: 18, PC: 2, OUT: 63, ACC: 63} 
-  DEBUG    root:machine.py:100 output: 'What is your name' << '?'
-  DEBUG    root:machine.py:138 {TICK: 214, ADDR: 18, PC: 2, OUT: 63, ACC: 63} 
-  DEBUG    root:machine.py:138 {TICK: 215, ADDR: 18, PC: 3, OUT: 63, ACC: 63} 
-  DEBUG    root:machine.py:138 {TICK: 216, ADDR: 31, PC: 3, OUT: 18, ACC: 18} 
-  DEBUG    root:machine.py:138 {TICK: 217, ADDR: 18, PC: 3, OUT: 63, ACC: 63} 
-  DEBUG    root:machine.py:138 {TICK: 218, ADDR: 34, PC: 3, OUT: 0, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 219, ADDR: 31, PC: 3, OUT: 18, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 220, ADDR: 31, PC: 3, OUT: 19, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 221, ADDR: 31, PC: 4, OUT: 19, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 222, ADDR: 31, PC: 5, OUT: 19, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 223, ADDR: 31, PC: 2, OUT: 19, ACC: -63} 
-  DEBUG    root:machine.py:138 {TICK: 224, ADDR: 31, PC: 2, OUT: 19, ACC: 19} 
-  DEBUG    root:machine.py:138 {TICK: 225, ADDR: 19, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:100 output: 'What is your name?' << ' '
-  DEBUG    root:machine.py:138 {TICK: 226, ADDR: 19, PC: 2, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 227, ADDR: 19, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 228, ADDR: 31, PC: 3, OUT: 19, ACC: 19} 
-  DEBUG    root:machine.py:138 {TICK: 229, ADDR: 19, PC: 3, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 230, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 231, ADDR: 31, PC: 3, OUT: 19, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 232, ADDR: 31, PC: 3, OUT: 20, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 233, ADDR: 31, PC: 4, OUT: 20, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 234, ADDR: 31, PC: 5, OUT: 20, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 235, ADDR: 31, PC: 2, OUT: 20, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 236, ADDR: 31, PC: 2, OUT: 20, ACC: 20} 
-  DEBUG    root:machine.py:138 {TICK: 237, ADDR: 20, PC: 2, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 238, ADDR: 20, PC: 2, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 239, ADDR: 20, PC: 3, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 240, ADDR: 31, PC: 3, OUT: 20, ACC: 20} 
-  DEBUG    root:machine.py:138 {TICK: 241, ADDR: 20, PC: 3, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 242, ADDR: 34, PC: 3, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 243, ADDR: 31, PC: 3, OUT: 20, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 244, ADDR: 31, PC: 3, OUT: 21, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 245, ADDR: 31, PC: 4, OUT: 21, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 246, ADDR: 31, PC: 6, OUT: 21, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 247, ADDR: 35, PC: 6, OUT: 21, ACC: 21} 
-  DEBUG    root:machine.py:138 {TICK: 248, ADDR: 31, PC: 6, OUT: 21, ACC: 21} 
-  DEBUG    root:machine.py:138 {TICK: 249, ADDR: 31, PC: 7, OUT: 21, ACC: 21} 
-  DEBUG    root:machine.py:138 {TICK: 250, ADDR: 31, PC: 7, OUT: 21, ACC: 21} 
-  DEBUG    root:machine.py:138 {TICK: 251, ADDR: 21, PC: 7, OUT: 72, ACC: 72} 
-  DEBUG    root:machine.py:100 output: 'What is your name? ' << 'H'
-  DEBUG    root:machine.py:138 {TICK: 252, ADDR: 21, PC: 7, OUT: 72, ACC: 72} 
-  DEBUG    root:machine.py:138 {TICK: 253, ADDR: 21, PC: 8, OUT: 72, ACC: 72} 
-  DEBUG    root:machine.py:138 {TICK: 254, ADDR: 31, PC: 8, OUT: 21, ACC: 21} 
-  DEBUG    root:machine.py:138 {TICK: 255, ADDR: 21, PC: 8, OUT: 72, ACC: 72} 
-  DEBUG    root:machine.py:138 {TICK: 256, ADDR: 36, PC: 8, OUT: 0, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 257, ADDR: 31, PC: 8, OUT: 21, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 258, ADDR: 31, PC: 8, OUT: 22, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 259, ADDR: 31, PC: 9, OUT: 22, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 260, ADDR: 31, PC: 10, OUT: 22, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 261, ADDR: 31, PC: 7, OUT: 22, ACC: -72} 
-  DEBUG    root:machine.py:138 {TICK: 262, ADDR: 31, PC: 7, OUT: 22, ACC: 22} 
-  DEBUG    root:machine.py:138 {TICK: 263, ADDR: 22, PC: 7, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:100 output: 'What is your name? H' << 'e'
-  DEBUG    root:machine.py:138 {TICK: 264, ADDR: 22, PC: 7, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 265, ADDR: 22, PC: 8, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 266, ADDR: 31, PC: 8, OUT: 22, ACC: 22} 
-  DEBUG    root:machine.py:138 {TICK: 267, ADDR: 22, PC: 8, OUT: 101, ACC: 101} 
-  DEBUG    root:machine.py:138 {TICK: 268, ADDR: 36, PC: 8, OUT: 0, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 269, ADDR: 31, PC: 8, OUT: 22, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 270, ADDR: 31, PC: 8, OUT: 23, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 271, ADDR: 31, PC: 9, OUT: 23, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 272, ADDR: 31, PC: 10, OUT: 23, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 273, ADDR: 31, PC: 7, OUT: 23, ACC: -101} 
-  DEBUG    root:machine.py:138 {TICK: 274, ADDR: 31, PC: 7, OUT: 23, ACC: 23} 
-  DEBUG    root:machine.py:138 {TICK: 275, ADDR: 23, PC: 7, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:100 output: 'What is your name? He' << 'l'
-  DEBUG    root:machine.py:138 {TICK: 276, ADDR: 23, PC: 7, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 277, ADDR: 23, PC: 8, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 278, ADDR: 31, PC: 8, OUT: 23, ACC: 23} 
-  DEBUG    root:machine.py:138 {TICK: 279, ADDR: 23, PC: 8, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 280, ADDR: 36, PC: 8, OUT: 0, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 281, ADDR: 31, PC: 8, OUT: 23, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 282, ADDR: 31, PC: 8, OUT: 24, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 283, ADDR: 31, PC: 9, OUT: 24, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 284, ADDR: 31, PC: 10, OUT: 24, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 285, ADDR: 31, PC: 7, OUT: 24, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 286, ADDR: 31, PC: 7, OUT: 24, ACC: 24} 
-  DEBUG    root:machine.py:138 {TICK: 287, ADDR: 24, PC: 7, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hel' << 'l'
-  DEBUG    root:machine.py:138 {TICK: 288, ADDR: 24, PC: 7, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 289, ADDR: 24, PC: 8, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 290, ADDR: 31, PC: 8, OUT: 24, ACC: 24} 
-  DEBUG    root:machine.py:138 {TICK: 291, ADDR: 24, PC: 8, OUT: 108, ACC: 108} 
-  DEBUG    root:machine.py:138 {TICK: 292, ADDR: 36, PC: 8, OUT: 0, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 293, ADDR: 31, PC: 8, OUT: 24, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 294, ADDR: 31, PC: 8, OUT: 25, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 295, ADDR: 31, PC: 9, OUT: 25, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 296, ADDR: 31, PC: 10, OUT: 25, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 297, ADDR: 31, PC: 7, OUT: 25, ACC: -108} 
-  DEBUG    root:machine.py:138 {TICK: 298, ADDR: 31, PC: 7, OUT: 25, ACC: 25} 
-  DEBUG    root:machine.py:138 {TICK: 299, ADDR: 25, PC: 7, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hell' << 'o'
-  DEBUG    root:machine.py:138 {TICK: 300, ADDR: 25, PC: 7, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 301, ADDR: 25, PC: 8, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 302, ADDR: 31, PC: 8, OUT: 25, ACC: 25} 
-  DEBUG    root:machine.py:138 {TICK: 303, ADDR: 25, PC: 8, OUT: 111, ACC: 111} 
-  DEBUG    root:machine.py:138 {TICK: 304, ADDR: 36, PC: 8, OUT: 0, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 305, ADDR: 31, PC: 8, OUT: 25, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 306, ADDR: 31, PC: 8, OUT: 26, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 307, ADDR: 31, PC: 9, OUT: 26, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 308, ADDR: 31, PC: 10, OUT: 26, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 309, ADDR: 31, PC: 7, OUT: 26, ACC: -111} 
-  DEBUG    root:machine.py:138 {TICK: 310, ADDR: 31, PC: 7, OUT: 26, ACC: 26} 
-  DEBUG    root:machine.py:138 {TICK: 311, ADDR: 26, PC: 7, OUT: 44, ACC: 44} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello' << ','
-  DEBUG    root:machine.py:138 {TICK: 312, ADDR: 26, PC: 7, OUT: 44, ACC: 44} 
-  DEBUG    root:machine.py:138 {TICK: 313, ADDR: 26, PC: 8, OUT: 44, ACC: 44} 
-  DEBUG    root:machine.py:138 {TICK: 314, ADDR: 31, PC: 8, OUT: 26, ACC: 26} 
-  DEBUG    root:machine.py:138 {TICK: 315, ADDR: 26, PC: 8, OUT: 44, ACC: 44} 
-  DEBUG    root:machine.py:138 {TICK: 316, ADDR: 36, PC: 8, OUT: 0, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 317, ADDR: 31, PC: 8, OUT: 26, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 318, ADDR: 31, PC: 8, OUT: 27, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 319, ADDR: 31, PC: 9, OUT: 27, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 320, ADDR: 31, PC: 10, OUT: 27, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 321, ADDR: 31, PC: 7, OUT: 27, ACC: -44} 
-  DEBUG    root:machine.py:138 {TICK: 322, ADDR: 31, PC: 7, OUT: 27, ACC: 27} 
-  DEBUG    root:machine.py:138 {TICK: 323, ADDR: 27, PC: 7, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello,' << ' '
-  DEBUG    root:machine.py:138 {TICK: 324, ADDR: 27, PC: 7, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 325, ADDR: 27, PC: 8, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 326, ADDR: 31, PC: 8, OUT: 27, ACC: 27} 
-  DEBUG    root:machine.py:138 {TICK: 327, ADDR: 27, PC: 8, OUT: 32, ACC: 32} 
-  DEBUG    root:machine.py:138 {TICK: 328, ADDR: 36, PC: 8, OUT: 0, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 329, ADDR: 31, PC: 8, OUT: 27, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 330, ADDR: 31, PC: 8, OUT: 28, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 331, ADDR: 31, PC: 9, OUT: 28, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 332, ADDR: 31, PC: 10, OUT: 28, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 333, ADDR: 31, PC: 7, OUT: 28, ACC: -32} 
-  DEBUG    root:machine.py:138 {TICK: 334, ADDR: 31, PC: 7, OUT: 28, ACC: 28} 
-  DEBUG    root:machine.py:138 {TICK: 335, ADDR: 28, PC: 7, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 336, ADDR: 28, PC: 7, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 337, ADDR: 28, PC: 8, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 338, ADDR: 31, PC: 8, OUT: 28, ACC: 28} 
-  DEBUG    root:machine.py:138 {TICK: 339, ADDR: 28, PC: 8, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 340, ADDR: 36, PC: 8, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 341, ADDR: 31, PC: 8, OUT: 28, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 342, ADDR: 31, PC: 8, OUT: 29, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 343, ADDR: 31, PC: 9, OUT: 29, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 344, ADDR: 31, PC: 11, OUT: 29, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 345, ADDR: 29, PC: 11, OUT: 53, ACC: 53} 
-  DEBUG    root:machine.py:138 {TICK: 346, ADDR: 29, PC: 12, OUT: 53, ACC: 53} 
-  DEBUG    root:machine.py:138 {TICK: 347, ADDR: 30, PC: 12, OUT: 53, ACC: 53} 
-  DEBUG    root:machine.py:138 {TICK: 348, ADDR: 30, PC: 13, OUT: 53, ACC: 53} 
-  DEBUG    root:machine.py:138 {TICK: 349, ADDR: 29, PC: 13, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 350, ADDR: 29, PC: 14, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 351, ADDR: 29, PC: 14, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello, ' << 'm'
-  DEBUG    root:machine.py:138 {TICK: 352, ADDR: 29, PC: 14, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 353, ADDR: 29, PC: 15, OUT: 109, ACC: 109} 
-  DEBUG    root:machine.py:138 {TICK: 354, ADDR: 30, PC: 15, OUT: 53, ACC: 53} 
-  DEBUG    root:machine.py:138 {TICK: 355, ADDR: 37, PC: 15, OUT: -1, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 356, ADDR: 30, PC: 15, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 357, ADDR: 30, PC: 16, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 358, ADDR: 38, PC: 16, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 359, ADDR: 30, PC: 16, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 360, ADDR: 30, PC: 17, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 361, ADDR: 30, PC: 18, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 362, ADDR: 30, PC: 13, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 363, ADDR: 29, PC: 13, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 364, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 365, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello, m' << 'a'
-  DEBUG    root:machine.py:138 {TICK: 366, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 367, ADDR: 29, PC: 15, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 368, ADDR: 30, PC: 15, OUT: 52, ACC: 52} 
-  DEBUG    root:machine.py:138 {TICK: 369, ADDR: 37, PC: 15, OUT: -1, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 370, ADDR: 30, PC: 15, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 371, ADDR: 30, PC: 16, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 372, ADDR: 38, PC: 16, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 373, ADDR: 30, PC: 16, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 374, ADDR: 30, PC: 17, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 375, ADDR: 30, PC: 18, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 376, ADDR: 30, PC: 13, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 377, ADDR: 29, PC: 13, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 378, ADDR: 29, PC: 14, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 379, ADDR: 29, PC: 14, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello, ma' << 'r'
-  DEBUG    root:machine.py:138 {TICK: 380, ADDR: 29, PC: 14, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 381, ADDR: 29, PC: 15, OUT: 114, ACC: 114} 
-  DEBUG    root:machine.py:138 {TICK: 382, ADDR: 30, PC: 15, OUT: 51, ACC: 51} 
-  DEBUG    root:machine.py:138 {TICK: 383, ADDR: 37, PC: 15, OUT: -1, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 384, ADDR: 30, PC: 15, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 385, ADDR: 30, PC: 16, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 386, ADDR: 38, PC: 16, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 387, ADDR: 30, PC: 16, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 388, ADDR: 30, PC: 17, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 389, ADDR: 30, PC: 18, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 390, ADDR: 30, PC: 13, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 391, ADDR: 29, PC: 13, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 392, ADDR: 29, PC: 14, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 393, ADDR: 29, PC: 14, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello, mar' << 'i'
-  DEBUG    root:machine.py:138 {TICK: 394, ADDR: 29, PC: 14, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 395, ADDR: 29, PC: 15, OUT: 105, ACC: 105} 
-  DEBUG    root:machine.py:138 {TICK: 396, ADDR: 30, PC: 15, OUT: 50, ACC: 50} 
-  DEBUG    root:machine.py:138 {TICK: 397, ADDR: 37, PC: 15, OUT: -1, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 398, ADDR: 30, PC: 15, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 399, ADDR: 30, PC: 16, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 400, ADDR: 38, PC: 16, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 401, ADDR: 30, PC: 16, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 402, ADDR: 30, PC: 17, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 403, ADDR: 30, PC: 18, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 404, ADDR: 30, PC: 13, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 405, ADDR: 29, PC: 13, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 406, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 407, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:100 output: 'What is your name? Hello, mari' << 'a'
-  DEBUG    root:machine.py:138 {TICK: 408, ADDR: 29, PC: 14, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 409, ADDR: 29, PC: 15, OUT: 97, ACC: 97} 
-  DEBUG    root:machine.py:138 {TICK: 410, ADDR: 30, PC: 15, OUT: 49, ACC: 49} 
-  DEBUG    root:machine.py:138 {TICK: 411, ADDR: 37, PC: 15, OUT: -1, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 412, ADDR: 30, PC: 15, OUT: 48, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 413, ADDR: 30, PC: 16, OUT: 48, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 414, ADDR: 38, PC: 16, OUT: 0, ACC: 0} 
-  DEBUG    root:machine.py:138 {TICK: 415, ADDR: 30, PC: 16, OUT: 48, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 416, ADDR: 30, PC: 17, OUT: 48, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 417, ADDR: 30, PC: 18, OUT: 48, ACC: 48} 
-  DEBUG    root:machine.py:138 {TICK: 418, ADDR: 30, PC: 13, OUT: 48, ACC: 48} 
-  WARNING  root:machine.py:287 Input buffer is empty!
-  INFO     root:machine.py:291 output_buffer: 'What is your name? Hello, maria'
-  
+  DEBUG    root:machine.py:279 {TICK: 0, ADDR: 0, PC: 0, OUT: 56, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 1, ADDR: 32, PC: 0, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 2, ADDR: 31, PC: 0, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 3, ADDR: 31, PC: 1, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 4, ADDR: 31, PC: 1, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 5, ADDR: 33, PC: 1, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 6, ADDR: 31, PC: 1, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 7, ADDR: 31, PC: 2, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 8, ADDR: 31, PC: 2, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 9, ADDR: 0, PC: 2, OUT: 56, ACC: 56} 
+  DEBUG    root:machine.py:101 output: '' << '8'
+  DEBUG    root:machine.py:140 {TICK: 10, ADDR: 0, PC: 2, OUT: 56, ACC: 56} 
+  DEBUG    root:machine.py:140 {TICK: 11, ADDR: 0, PC: 3, OUT: 56, ACC: 56} 
+  DEBUG    root:machine.py:140 {TICK: 12, ADDR: 31, PC: 3, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 13, ADDR: 0, PC: 3, OUT: 56, ACC: 56} 
+  DEBUG    root:machine.py:140 {TICK: 14, ADDR: 34, PC: 3, OUT: 0, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 15, ADDR: 31, PC: 3, OUT: 0, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 16, ADDR: 31, PC: 3, OUT: 1, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 17, ADDR: 31, PC: 4, OUT: 1, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 18, ADDR: 31, PC: 5, OUT: 1, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 19, ADDR: 31, PC: 2, OUT: 1, ACC: -56} 
+  DEBUG    root:machine.py:140 {TICK: 20, ADDR: 31, PC: 2, OUT: 1, ACC: 1} 
+  DEBUG    root:machine.py:140 {TICK: 21, ADDR: 1, PC: 2, OUT: 87, ACC: 87} 
+  DEBUG    root:machine.py:101 output: '8' << 'W'
+  DEBUG    root:machine.py:140 {TICK: 22, ADDR: 1, PC: 2, OUT: 87, ACC: 87} 
+  DEBUG    root:machine.py:140 {TICK: 23, ADDR: 1, PC: 3, OUT: 87, ACC: 87} 
+  DEBUG    root:machine.py:140 {TICK: 24, ADDR: 31, PC: 3, OUT: 1, ACC: 1} 
+  DEBUG    root:machine.py:140 {TICK: 25, ADDR: 1, PC: 3, OUT: 87, ACC: 87} 
+  DEBUG    root:machine.py:140 {TICK: 26, ADDR: 34, PC: 3, OUT: 0, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 27, ADDR: 31, PC: 3, OUT: 1, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 28, ADDR: 31, PC: 3, OUT: 2, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 29, ADDR: 31, PC: 4, OUT: 2, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 30, ADDR: 31, PC: 5, OUT: 2, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 31, ADDR: 31, PC: 2, OUT: 2, ACC: -87} 
+  DEBUG    root:machine.py:140 {TICK: 32, ADDR: 31, PC: 2, OUT: 2, ACC: 2} 
+  DEBUG    root:machine.py:140 {TICK: 33, ADDR: 2, PC: 2, OUT: 104, ACC: 104} 
+  DEBUG    root:machine.py:101 output: '8W' << 'h'
+  DEBUG    root:machine.py:140 {TICK: 34, ADDR: 2, PC: 2, OUT: 104, ACC: 104} 
+  DEBUG    root:machine.py:140 {TICK: 35, ADDR: 2, PC: 3, OUT: 104, ACC: 104} 
+  DEBUG    root:machine.py:140 {TICK: 36, ADDR: 31, PC: 3, OUT: 2, ACC: 2} 
+  DEBUG    root:machine.py:140 {TICK: 37, ADDR: 2, PC: 3, OUT: 104, ACC: 104} 
+  DEBUG    root:machine.py:140 {TICK: 38, ADDR: 34, PC: 3, OUT: 0, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 39, ADDR: 31, PC: 3, OUT: 2, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 40, ADDR: 31, PC: 3, OUT: 3, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 41, ADDR: 31, PC: 4, OUT: 3, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 42, ADDR: 31, PC: 5, OUT: 3, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 43, ADDR: 31, PC: 2, OUT: 3, ACC: -104} 
+  DEBUG    root:machine.py:140 {TICK: 44, ADDR: 31, PC: 2, OUT: 3, ACC: 3} 
+  DEBUG    root:machine.py:140 {TICK: 45, ADDR: 3, PC: 2, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:101 output: '8Wh' << 'a'
+  DEBUG    root:machine.py:140 {TICK: 46, ADDR: 3, PC: 2, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 47, ADDR: 3, PC: 3, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 48, ADDR: 31, PC: 3, OUT: 3, ACC: 3} 
+  DEBUG    root:machine.py:140 {TICK: 49, ADDR: 3, PC: 3, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 50, ADDR: 34, PC: 3, OUT: 0, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 51, ADDR: 31, PC: 3, OUT: 3, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 52, ADDR: 31, PC: 3, OUT: 4, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 53, ADDR: 31, PC: 4, OUT: 4, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 54, ADDR: 31, PC: 5, OUT: 4, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 55, ADDR: 31, PC: 2, OUT: 4, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 56, ADDR: 31, PC: 2, OUT: 4, ACC: 4} 
+  DEBUG    root:machine.py:140 {TICK: 57, ADDR: 4, PC: 2, OUT: 116, ACC: 116} 
+  DEBUG    root:machine.py:101 output: '8Wha' << 't'
+  DEBUG    root:machine.py:140 {TICK: 58, ADDR: 4, PC: 2, OUT: 116, ACC: 116} 
+  DEBUG    root:machine.py:140 {TICK: 59, ADDR: 4, PC: 3, OUT: 116, ACC: 116} 
+  DEBUG    root:machine.py:140 {TICK: 60, ADDR: 31, PC: 3, OUT: 4, ACC: 4} 
+  DEBUG    root:machine.py:140 {TICK: 61, ADDR: 4, PC: 3, OUT: 116, ACC: 116} 
+  DEBUG    root:machine.py:140 {TICK: 62, ADDR: 34, PC: 3, OUT: 0, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 63, ADDR: 31, PC: 3, OUT: 4, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 64, ADDR: 31, PC: 3, OUT: 5, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 65, ADDR: 31, PC: 4, OUT: 5, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 66, ADDR: 31, PC: 5, OUT: 5, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 67, ADDR: 31, PC: 2, OUT: 5, ACC: -116} 
+  DEBUG    root:machine.py:140 {TICK: 68, ADDR: 31, PC: 2, OUT: 5, ACC: 5} 
+  DEBUG    root:machine.py:140 {TICK: 69, ADDR: 5, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:101 output: '8What' << ' '
+  DEBUG    root:machine.py:140 {TICK: 70, ADDR: 5, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 71, ADDR: 5, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 72, ADDR: 31, PC: 3, OUT: 5, ACC: 5} 
+  DEBUG    root:machine.py:140 {TICK: 73, ADDR: 5, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 74, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 75, ADDR: 31, PC: 3, OUT: 5, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 76, ADDR: 31, PC: 3, OUT: 6, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 77, ADDR: 31, PC: 4, OUT: 6, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 78, ADDR: 31, PC: 5, OUT: 6, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 79, ADDR: 31, PC: 2, OUT: 6, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 80, ADDR: 31, PC: 2, OUT: 6, ACC: 6} 
+  DEBUG    root:machine.py:140 {TICK: 81, ADDR: 6, PC: 2, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:101 output: '8What ' << 'i'
+  DEBUG    root:machine.py:140 {TICK: 82, ADDR: 6, PC: 2, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 83, ADDR: 6, PC: 3, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 84, ADDR: 31, PC: 3, OUT: 6, ACC: 6} 
+  DEBUG    root:machine.py:140 {TICK: 85, ADDR: 6, PC: 3, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 86, ADDR: 34, PC: 3, OUT: 0, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 87, ADDR: 31, PC: 3, OUT: 6, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 88, ADDR: 31, PC: 3, OUT: 7, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 89, ADDR: 31, PC: 4, OUT: 7, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 90, ADDR: 31, PC: 5, OUT: 7, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 91, ADDR: 31, PC: 2, OUT: 7, ACC: -105} 
+  DEBUG    root:machine.py:140 {TICK: 92, ADDR: 31, PC: 2, OUT: 7, ACC: 7} 
+  DEBUG    root:machine.py:140 {TICK: 93, ADDR: 7, PC: 2, OUT: 115, ACC: 115} 
+  DEBUG    root:machine.py:101 output: '8What i' << 's'
+  DEBUG    root:machine.py:140 {TICK: 94, ADDR: 7, PC: 2, OUT: 115, ACC: 115} 
+  DEBUG    root:machine.py:140 {TICK: 95, ADDR: 7, PC: 3, OUT: 115, ACC: 115} 
+  DEBUG    root:machine.py:140 {TICK: 96, ADDR: 31, PC: 3, OUT: 7, ACC: 7} 
+  DEBUG    root:machine.py:140 {TICK: 97, ADDR: 7, PC: 3, OUT: 115, ACC: 115} 
+  DEBUG    root:machine.py:140 {TICK: 98, ADDR: 34, PC: 3, OUT: 0, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 99, ADDR: 31, PC: 3, OUT: 7, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 100, ADDR: 31, PC: 3, OUT: 8, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 101, ADDR: 31, PC: 4, OUT: 8, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 102, ADDR: 31, PC: 5, OUT: 8, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 103, ADDR: 31, PC: 2, OUT: 8, ACC: -115} 
+  DEBUG    root:machine.py:140 {TICK: 104, ADDR: 31, PC: 2, OUT: 8, ACC: 8} 
+  DEBUG    root:machine.py:140 {TICK: 105, ADDR: 8, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:101 output: '8What is' << ' '
+  DEBUG    root:machine.py:140 {TICK: 106, ADDR: 8, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 107, ADDR: 8, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 108, ADDR: 31, PC: 3, OUT: 8, ACC: 8} 
+  DEBUG    root:machine.py:140 {TICK: 109, ADDR: 8, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 110, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 111, ADDR: 31, PC: 3, OUT: 8, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 112, ADDR: 31, PC: 3, OUT: 9, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 113, ADDR: 31, PC: 4, OUT: 9, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 114, ADDR: 31, PC: 5, OUT: 9, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 115, ADDR: 31, PC: 2, OUT: 9, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 116, ADDR: 31, PC: 2, OUT: 9, ACC: 9} 
+  DEBUG    root:machine.py:140 {TICK: 117, ADDR: 9, PC: 2, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:101 output: '8What is ' << 'y'
+  DEBUG    root:machine.py:140 {TICK: 118, ADDR: 9, PC: 2, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:140 {TICK: 119, ADDR: 9, PC: 3, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:140 {TICK: 120, ADDR: 31, PC: 3, OUT: 9, ACC: 9} 
+  DEBUG    root:machine.py:140 {TICK: 121, ADDR: 9, PC: 3, OUT: 121, ACC: 121} 
+  DEBUG    root:machine.py:140 {TICK: 122, ADDR: 34, PC: 3, OUT: 0, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 123, ADDR: 31, PC: 3, OUT: 9, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 124, ADDR: 31, PC: 3, OUT: 10, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 125, ADDR: 31, PC: 4, OUT: 10, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 126, ADDR: 31, PC: 5, OUT: 10, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 127, ADDR: 31, PC: 2, OUT: 10, ACC: -121} 
+  DEBUG    root:machine.py:140 {TICK: 128, ADDR: 31, PC: 2, OUT: 10, ACC: 10} 
+  DEBUG    root:machine.py:140 {TICK: 129, ADDR: 10, PC: 2, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:101 output: '8What is y' << 'o'
+  DEBUG    root:machine.py:140 {TICK: 130, ADDR: 10, PC: 2, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 131, ADDR: 10, PC: 3, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 132, ADDR: 31, PC: 3, OUT: 10, ACC: 10} 
+  DEBUG    root:machine.py:140 {TICK: 133, ADDR: 10, PC: 3, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 134, ADDR: 34, PC: 3, OUT: 0, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 135, ADDR: 31, PC: 3, OUT: 10, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 136, ADDR: 31, PC: 3, OUT: 11, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 137, ADDR: 31, PC: 4, OUT: 11, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 138, ADDR: 31, PC: 5, OUT: 11, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 139, ADDR: 31, PC: 2, OUT: 11, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 140, ADDR: 31, PC: 2, OUT: 11, ACC: 11} 
+  DEBUG    root:machine.py:140 {TICK: 141, ADDR: 11, PC: 2, OUT: 117, ACC: 117} 
+  DEBUG    root:machine.py:101 output: '8What is yo' << 'u'
+  DEBUG    root:machine.py:140 {TICK: 142, ADDR: 11, PC: 2, OUT: 117, ACC: 117} 
+  DEBUG    root:machine.py:140 {TICK: 143, ADDR: 11, PC: 3, OUT: 117, ACC: 117} 
+  DEBUG    root:machine.py:140 {TICK: 144, ADDR: 31, PC: 3, OUT: 11, ACC: 11} 
+  DEBUG    root:machine.py:140 {TICK: 145, ADDR: 11, PC: 3, OUT: 117, ACC: 117} 
+  DEBUG    root:machine.py:140 {TICK: 146, ADDR: 34, PC: 3, OUT: 0, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 147, ADDR: 31, PC: 3, OUT: 11, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 148, ADDR: 31, PC: 3, OUT: 12, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 149, ADDR: 31, PC: 4, OUT: 12, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 150, ADDR: 31, PC: 5, OUT: 12, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 151, ADDR: 31, PC: 2, OUT: 12, ACC: -117} 
+  DEBUG    root:machine.py:140 {TICK: 152, ADDR: 31, PC: 2, OUT: 12, ACC: 12} 
+  DEBUG    root:machine.py:140 {TICK: 153, ADDR: 12, PC: 2, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:101 output: '8What is you' << 'r'
+  DEBUG    root:machine.py:140 {TICK: 154, ADDR: 12, PC: 2, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 155, ADDR: 12, PC: 3, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 156, ADDR: 31, PC: 3, OUT: 12, ACC: 12} 
+  DEBUG    root:machine.py:140 {TICK: 157, ADDR: 12, PC: 3, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 158, ADDR: 34, PC: 3, OUT: 0, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 159, ADDR: 31, PC: 3, OUT: 12, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 160, ADDR: 31, PC: 3, OUT: 13, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 161, ADDR: 31, PC: 4, OUT: 13, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 162, ADDR: 31, PC: 5, OUT: 13, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 163, ADDR: 31, PC: 2, OUT: 13, ACC: -114} 
+  DEBUG    root:machine.py:140 {TICK: 164, ADDR: 31, PC: 2, OUT: 13, ACC: 13} 
+  DEBUG    root:machine.py:140 {TICK: 165, ADDR: 13, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:101 output: '8What is your' << ' '
+  DEBUG    root:machine.py:140 {TICK: 166, ADDR: 13, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 167, ADDR: 13, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 168, ADDR: 31, PC: 3, OUT: 13, ACC: 13} 
+  DEBUG    root:machine.py:140 {TICK: 169, ADDR: 13, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 170, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 171, ADDR: 31, PC: 3, OUT: 13, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 172, ADDR: 31, PC: 3, OUT: 14, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 173, ADDR: 31, PC: 4, OUT: 14, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 174, ADDR: 31, PC: 5, OUT: 14, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 175, ADDR: 31, PC: 2, OUT: 14, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 176, ADDR: 31, PC: 2, OUT: 14, ACC: 14} 
+  DEBUG    root:machine.py:140 {TICK: 177, ADDR: 14, PC: 2, OUT: 110, ACC: 110} 
+  DEBUG    root:machine.py:101 output: '8What is your ' << 'n'
+  DEBUG    root:machine.py:140 {TICK: 178, ADDR: 14, PC: 2, OUT: 110, ACC: 110} 
+  DEBUG    root:machine.py:140 {TICK: 179, ADDR: 14, PC: 3, OUT: 110, ACC: 110} 
+  DEBUG    root:machine.py:140 {TICK: 180, ADDR: 31, PC: 3, OUT: 14, ACC: 14} 
+  DEBUG    root:machine.py:140 {TICK: 181, ADDR: 14, PC: 3, OUT: 110, ACC: 110} 
+  DEBUG    root:machine.py:140 {TICK: 182, ADDR: 34, PC: 3, OUT: 0, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 183, ADDR: 31, PC: 3, OUT: 14, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 184, ADDR: 31, PC: 3, OUT: 15, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 185, ADDR: 31, PC: 4, OUT: 15, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 186, ADDR: 31, PC: 5, OUT: 15, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 187, ADDR: 31, PC: 2, OUT: 15, ACC: -110} 
+  DEBUG    root:machine.py:140 {TICK: 188, ADDR: 31, PC: 2, OUT: 15, ACC: 15} 
+  DEBUG    root:machine.py:140 {TICK: 189, ADDR: 15, PC: 2, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:101 output: '8What is your n' << 'a'
+  DEBUG    root:machine.py:140 {TICK: 190, ADDR: 15, PC: 2, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 191, ADDR: 15, PC: 3, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 192, ADDR: 31, PC: 3, OUT: 15, ACC: 15} 
+  DEBUG    root:machine.py:140 {TICK: 193, ADDR: 15, PC: 3, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 194, ADDR: 34, PC: 3, OUT: 0, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 195, ADDR: 31, PC: 3, OUT: 15, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 196, ADDR: 31, PC: 3, OUT: 16, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 197, ADDR: 31, PC: 4, OUT: 16, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 198, ADDR: 31, PC: 5, OUT: 16, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 199, ADDR: 31, PC: 2, OUT: 16, ACC: -97} 
+  DEBUG    root:machine.py:140 {TICK: 200, ADDR: 31, PC: 2, OUT: 16, ACC: 16} 
+  DEBUG    root:machine.py:140 {TICK: 201, ADDR: 16, PC: 2, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:101 output: '8What is your na' << 'm'
+  DEBUG    root:machine.py:140 {TICK: 202, ADDR: 16, PC: 2, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 203, ADDR: 16, PC: 3, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 204, ADDR: 31, PC: 3, OUT: 16, ACC: 16} 
+  DEBUG    root:machine.py:140 {TICK: 205, ADDR: 16, PC: 3, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 206, ADDR: 34, PC: 3, OUT: 0, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 207, ADDR: 31, PC: 3, OUT: 16, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 208, ADDR: 31, PC: 3, OUT: 17, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 209, ADDR: 31, PC: 4, OUT: 17, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 210, ADDR: 31, PC: 5, OUT: 17, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 211, ADDR: 31, PC: 2, OUT: 17, ACC: -109} 
+  DEBUG    root:machine.py:140 {TICK: 212, ADDR: 31, PC: 2, OUT: 17, ACC: 17} 
+  DEBUG    root:machine.py:140 {TICK: 213, ADDR: 17, PC: 2, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:101 output: '8What is your nam' << 'e'
+  DEBUG    root:machine.py:140 {TICK: 214, ADDR: 17, PC: 2, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 215, ADDR: 17, PC: 3, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 216, ADDR: 31, PC: 3, OUT: 17, ACC: 17} 
+  DEBUG    root:machine.py:140 {TICK: 217, ADDR: 17, PC: 3, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 218, ADDR: 34, PC: 3, OUT: 0, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 219, ADDR: 31, PC: 3, OUT: 17, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 220, ADDR: 31, PC: 3, OUT: 18, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 221, ADDR: 31, PC: 4, OUT: 18, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 222, ADDR: 31, PC: 5, OUT: 18, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 223, ADDR: 31, PC: 2, OUT: 18, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 224, ADDR: 31, PC: 2, OUT: 18, ACC: 18} 
+  DEBUG    root:machine.py:140 {TICK: 225, ADDR: 18, PC: 2, OUT: 63, ACC: 63} 
+  DEBUG    root:machine.py:101 output: '8What is your name' << '?'
+  DEBUG    root:machine.py:140 {TICK: 226, ADDR: 18, PC: 2, OUT: 63, ACC: 63} 
+  DEBUG    root:machine.py:140 {TICK: 227, ADDR: 18, PC: 3, OUT: 63, ACC: 63} 
+  DEBUG    root:machine.py:140 {TICK: 228, ADDR: 31, PC: 3, OUT: 18, ACC: 18} 
+  DEBUG    root:machine.py:140 {TICK: 229, ADDR: 18, PC: 3, OUT: 63, ACC: 63} 
+  DEBUG    root:machine.py:140 {TICK: 230, ADDR: 34, PC: 3, OUT: 0, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 231, ADDR: 31, PC: 3, OUT: 18, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 232, ADDR: 31, PC: 3, OUT: 19, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 233, ADDR: 31, PC: 4, OUT: 19, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 234, ADDR: 31, PC: 5, OUT: 19, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 235, ADDR: 31, PC: 2, OUT: 19, ACC: -63} 
+  DEBUG    root:machine.py:140 {TICK: 236, ADDR: 31, PC: 2, OUT: 19, ACC: 19} 
+  DEBUG    root:machine.py:140 {TICK: 237, ADDR: 19, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:101 output: '8What is your name?' << ' '
+  DEBUG    root:machine.py:140 {TICK: 238, ADDR: 19, PC: 2, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 239, ADDR: 19, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 240, ADDR: 31, PC: 3, OUT: 19, ACC: 19} 
+  DEBUG    root:machine.py:140 {TICK: 241, ADDR: 19, PC: 3, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 242, ADDR: 34, PC: 3, OUT: 0, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 243, ADDR: 31, PC: 3, OUT: 19, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 244, ADDR: 31, PC: 3, OUT: 20, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 245, ADDR: 31, PC: 4, OUT: 20, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 246, ADDR: 31, PC: 5, OUT: 20, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 247, ADDR: 31, PC: 2, OUT: 20, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 248, ADDR: 31, PC: 2, OUT: 20, ACC: 20} 
+  DEBUG    root:machine.py:140 {TICK: 249, ADDR: 20, PC: 2, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 250, ADDR: 20, PC: 2, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 251, ADDR: 20, PC: 3, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 252, ADDR: 31, PC: 3, OUT: 20, ACC: 20} 
+  DEBUG    root:machine.py:140 {TICK: 253, ADDR: 20, PC: 3, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 254, ADDR: 34, PC: 3, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 255, ADDR: 31, PC: 3, OUT: 20, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 256, ADDR: 31, PC: 3, OUT: 21, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 257, ADDR: 31, PC: 4, OUT: 21, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 258, ADDR: 31, PC: 6, OUT: 21, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 259, ADDR: 35, PC: 6, OUT: 21, ACC: 21} 
+  DEBUG    root:machine.py:140 {TICK: 260, ADDR: 31, PC: 6, OUT: 21, ACC: 21} 
+  DEBUG    root:machine.py:140 {TICK: 261, ADDR: 31, PC: 7, OUT: 21, ACC: 21} 
+  DEBUG    root:machine.py:140 {TICK: 262, ADDR: 31, PC: 7, OUT: 21, ACC: 21} 
+  DEBUG    root:machine.py:140 {TICK: 263, ADDR: 21, PC: 7, OUT: 72, ACC: 72} 
+  DEBUG    root:machine.py:101 output: '8What is your name? ' << 'H'
+  DEBUG    root:machine.py:140 {TICK: 264, ADDR: 21, PC: 7, OUT: 72, ACC: 72} 
+  DEBUG    root:machine.py:140 {TICK: 265, ADDR: 21, PC: 8, OUT: 72, ACC: 72} 
+  DEBUG    root:machine.py:140 {TICK: 266, ADDR: 31, PC: 8, OUT: 21, ACC: 21} 
+  DEBUG    root:machine.py:140 {TICK: 267, ADDR: 21, PC: 8, OUT: 72, ACC: 72} 
+  DEBUG    root:machine.py:140 {TICK: 268, ADDR: 36, PC: 8, OUT: 0, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 269, ADDR: 31, PC: 8, OUT: 21, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 270, ADDR: 31, PC: 8, OUT: 22, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 271, ADDR: 31, PC: 9, OUT: 22, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 272, ADDR: 31, PC: 10, OUT: 22, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 273, ADDR: 31, PC: 7, OUT: 22, ACC: -72} 
+  DEBUG    root:machine.py:140 {TICK: 274, ADDR: 31, PC: 7, OUT: 22, ACC: 22} 
+  DEBUG    root:machine.py:140 {TICK: 275, ADDR: 22, PC: 7, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:101 output: '8What is your name? H' << 'e'
+  DEBUG    root:machine.py:140 {TICK: 276, ADDR: 22, PC: 7, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 277, ADDR: 22, PC: 8, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 278, ADDR: 31, PC: 8, OUT: 22, ACC: 22} 
+  DEBUG    root:machine.py:140 {TICK: 279, ADDR: 22, PC: 8, OUT: 101, ACC: 101} 
+  DEBUG    root:machine.py:140 {TICK: 280, ADDR: 36, PC: 8, OUT: 0, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 281, ADDR: 31, PC: 8, OUT: 22, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 282, ADDR: 31, PC: 8, OUT: 23, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 283, ADDR: 31, PC: 9, OUT: 23, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 284, ADDR: 31, PC: 10, OUT: 23, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 285, ADDR: 31, PC: 7, OUT: 23, ACC: -101} 
+  DEBUG    root:machine.py:140 {TICK: 286, ADDR: 31, PC: 7, OUT: 23, ACC: 23} 
+  DEBUG    root:machine.py:140 {TICK: 287, ADDR: 23, PC: 7, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:101 output: '8What is your name? He' << 'l'
+  DEBUG    root:machine.py:140 {TICK: 288, ADDR: 23, PC: 7, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 289, ADDR: 23, PC: 8, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 290, ADDR: 31, PC: 8, OUT: 23, ACC: 23} 
+  DEBUG    root:machine.py:140 {TICK: 291, ADDR: 23, PC: 8, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 292, ADDR: 36, PC: 8, OUT: 0, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 293, ADDR: 31, PC: 8, OUT: 23, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 294, ADDR: 31, PC: 8, OUT: 24, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 295, ADDR: 31, PC: 9, OUT: 24, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 296, ADDR: 31, PC: 10, OUT: 24, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 297, ADDR: 31, PC: 7, OUT: 24, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 298, ADDR: 31, PC: 7, OUT: 24, ACC: 24} 
+  DEBUG    root:machine.py:140 {TICK: 299, ADDR: 24, PC: 7, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hel' << 'l'
+  DEBUG    root:machine.py:140 {TICK: 300, ADDR: 24, PC: 7, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 301, ADDR: 24, PC: 8, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 302, ADDR: 31, PC: 8, OUT: 24, ACC: 24} 
+  DEBUG    root:machine.py:140 {TICK: 303, ADDR: 24, PC: 8, OUT: 108, ACC: 108} 
+  DEBUG    root:machine.py:140 {TICK: 304, ADDR: 36, PC: 8, OUT: 0, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 305, ADDR: 31, PC: 8, OUT: 24, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 306, ADDR: 31, PC: 8, OUT: 25, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 307, ADDR: 31, PC: 9, OUT: 25, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 308, ADDR: 31, PC: 10, OUT: 25, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 309, ADDR: 31, PC: 7, OUT: 25, ACC: -108} 
+  DEBUG    root:machine.py:140 {TICK: 310, ADDR: 31, PC: 7, OUT: 25, ACC: 25} 
+  DEBUG    root:machine.py:140 {TICK: 311, ADDR: 25, PC: 7, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hell' << 'o'
+  DEBUG    root:machine.py:140 {TICK: 312, ADDR: 25, PC: 7, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 313, ADDR: 25, PC: 8, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 314, ADDR: 31, PC: 8, OUT: 25, ACC: 25} 
+  DEBUG    root:machine.py:140 {TICK: 315, ADDR: 25, PC: 8, OUT: 111, ACC: 111} 
+  DEBUG    root:machine.py:140 {TICK: 316, ADDR: 36, PC: 8, OUT: 0, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 317, ADDR: 31, PC: 8, OUT: 25, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 318, ADDR: 31, PC: 8, OUT: 26, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 319, ADDR: 31, PC: 9, OUT: 26, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 320, ADDR: 31, PC: 10, OUT: 26, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 321, ADDR: 31, PC: 7, OUT: 26, ACC: -111} 
+  DEBUG    root:machine.py:140 {TICK: 322, ADDR: 31, PC: 7, OUT: 26, ACC: 26} 
+  DEBUG    root:machine.py:140 {TICK: 323, ADDR: 26, PC: 7, OUT: 44, ACC: 44} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello' << ','
+  DEBUG    root:machine.py:140 {TICK: 324, ADDR: 26, PC: 7, OUT: 44, ACC: 44} 
+  DEBUG    root:machine.py:140 {TICK: 325, ADDR: 26, PC: 8, OUT: 44, ACC: 44} 
+  DEBUG    root:machine.py:140 {TICK: 326, ADDR: 31, PC: 8, OUT: 26, ACC: 26} 
+  DEBUG    root:machine.py:140 {TICK: 327, ADDR: 26, PC: 8, OUT: 44, ACC: 44} 
+  DEBUG    root:machine.py:140 {TICK: 328, ADDR: 36, PC: 8, OUT: 0, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 329, ADDR: 31, PC: 8, OUT: 26, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 330, ADDR: 31, PC: 8, OUT: 27, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 331, ADDR: 31, PC: 9, OUT: 27, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 332, ADDR: 31, PC: 10, OUT: 27, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 333, ADDR: 31, PC: 7, OUT: 27, ACC: -44} 
+  DEBUG    root:machine.py:140 {TICK: 334, ADDR: 31, PC: 7, OUT: 27, ACC: 27} 
+  DEBUG    root:machine.py:140 {TICK: 335, ADDR: 27, PC: 7, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello,' << ' '
+  DEBUG    root:machine.py:140 {TICK: 336, ADDR: 27, PC: 7, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 337, ADDR: 27, PC: 8, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 338, ADDR: 31, PC: 8, OUT: 27, ACC: 27} 
+  DEBUG    root:machine.py:140 {TICK: 339, ADDR: 27, PC: 8, OUT: 32, ACC: 32} 
+  DEBUG    root:machine.py:140 {TICK: 340, ADDR: 36, PC: 8, OUT: 0, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 341, ADDR: 31, PC: 8, OUT: 27, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 342, ADDR: 31, PC: 8, OUT: 28, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 343, ADDR: 31, PC: 9, OUT: 28, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 344, ADDR: 31, PC: 10, OUT: 28, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 345, ADDR: 31, PC: 7, OUT: 28, ACC: -32} 
+  DEBUG    root:machine.py:140 {TICK: 346, ADDR: 31, PC: 7, OUT: 28, ACC: 28} 
+  DEBUG    root:machine.py:140 {TICK: 347, ADDR: 28, PC: 7, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 348, ADDR: 28, PC: 7, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 349, ADDR: 28, PC: 8, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 350, ADDR: 31, PC: 8, OUT: 28, ACC: 28} 
+  DEBUG    root:machine.py:140 {TICK: 351, ADDR: 28, PC: 8, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 352, ADDR: 36, PC: 8, OUT: 0, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 353, ADDR: 31, PC: 8, OUT: 28, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 354, ADDR: 31, PC: 8, OUT: 29, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 355, ADDR: 31, PC: 9, OUT: 29, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 356, ADDR: 31, PC: 11, OUT: 29, ACC: 0} 
+  DEBUG    root:machine.py:140 {TICK: 357, ADDR: 29, PC: 11, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 358, ADDR: 29, PC: 12, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 359, ADDR: 29, PC: 12, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello, ' << 'm'
+  DEBUG    root:machine.py:140 {TICK: 360, ADDR: 29, PC: 12, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 361, ADDR: 29, PC: 13, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 362, ADDR: 29, PC: 11, OUT: 109, ACC: 109} 
+  DEBUG    root:machine.py:140 {TICK: 363, ADDR: 29, PC: 11, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 364, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 365, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello, m' << 'a'
+  DEBUG    root:machine.py:140 {TICK: 366, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 367, ADDR: 29, PC: 13, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 368, ADDR: 29, PC: 11, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 369, ADDR: 29, PC: 11, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 370, ADDR: 29, PC: 12, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 371, ADDR: 29, PC: 12, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello, ma' << 'r'
+  DEBUG    root:machine.py:140 {TICK: 372, ADDR: 29, PC: 12, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 373, ADDR: 29, PC: 13, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 374, ADDR: 29, PC: 11, OUT: 114, ACC: 114} 
+  DEBUG    root:machine.py:140 {TICK: 375, ADDR: 29, PC: 11, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 376, ADDR: 29, PC: 12, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 377, ADDR: 29, PC: 12, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello, mar' << 'i'
+  DEBUG    root:machine.py:140 {TICK: 378, ADDR: 29, PC: 12, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 379, ADDR: 29, PC: 13, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 380, ADDR: 29, PC: 11, OUT: 105, ACC: 105} 
+  DEBUG    root:machine.py:140 {TICK: 381, ADDR: 29, PC: 11, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 382, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 383, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:101 output: '8What is your name? Hello, mari' << 'a'
+  DEBUG    root:machine.py:140 {TICK: 384, ADDR: 29, PC: 12, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 385, ADDR: 29, PC: 13, OUT: 97, ACC: 97} 
+  DEBUG    root:machine.py:140 {TICK: 386, ADDR: 29, PC: 11, OUT: 97, ACC: 97} 
+  WARNING  root:machine.py:289 Input buffer is empty!
+  INFO     root:machine.py:293 output_buffer: '8What is your name? Hello, maria'
+
